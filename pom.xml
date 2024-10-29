@@ -4,9 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.luksdk</groupId>
-    <artifactId>java</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>io.github.cfgametech</groupId>
+    <artifactId>luksdk</artifactId>
+    <version>0.0.1</version>
+
+    <name>luksdk</name>
+    <description>LUKSDK 是面向 LUKSDK 后台接入的 SDK 集成，用于帮助开发者快速接入 LUKSDK。</description>
+    <url>https://github.com/CFGameTech/project-luksdk-java</url>
 
     <properties>
         <maven.compiler.source>23</maven.compiler.source>
@@ -25,6 +29,80 @@
 
     <build>
         <plugins>
+            <!-- maven编译插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <!-- maven Source插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- maven Javadoc插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.10.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- gpg插件 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <!-- 改成你自己的路径 -->
+                    <executable>D:\application\GnuPG\bin\gpg.exe</executable>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- 发布插件 -->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.5.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <!--<tokenAuth>true</tokenAuth>-->
+                    <!-- 若要自动发布，添加以下配置 -->
+                    <!--<autoPublish>true</autoPublish>-->
+                    <!-- 一直等到发布完成 -->
+                    <!--<waitUntil>published</waitUntil>-->
+                </configuration>
+            </plugin>
+            <!-- 本地部署插件 -->
             <plugin>
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>2.8.1</version>
@@ -32,33 +110,55 @@
                     <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
                 </configuration>
             </plugin>
-
-            <plugin>
-                <groupId>com.github.github</groupId>
-                <artifactId>site-maven-plugin</artifactId>
-                <version >0.12</version>
-                <configuration>
-                    <message >Maven artifacts for ${project.version}</message>
-                    <noJekyll>true</noJekyll>
-                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory><!--本地jar地址-->
-                    <branch>refs/heads/master</branch><!--分支的名称-->
-                    <merge>true</merge>
-                    <includes>
-                        <include>**/*</include>
-                    </includes>
-                    <repositoryName>project-luksdk-java</repositoryName><!--对应github上创建的仓库名称 name-->
-                    <repositoryOwner>kercylan98</repositoryOwner><!--github 仓库所有者即登录用户名-->
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>site</goal>
-                        </goals>
-                        <phase>deploy</phase>
-                    </execution>
-                </executions>
-            </plugin>
+            <!-- github插件 -->
+<!--            <plugin>-->
+<!--                <groupId>com.github.github</groupId>-->
+<!--                <artifactId>site-maven-plugin</artifactId>-->
+<!--                <version >0.12</version>-->
+<!--                <configuration>-->
+<!--                    <message >Maven artifacts for ${project.version}</message>-->
+<!--                    <noJekyll>true</noJekyll>-->
+<!--                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>&lt;!&ndash;本地jar地址&ndash;&gt;-->
+<!--                    <branch>refs/heads/master</branch>&lt;!&ndash;分支的名称&ndash;&gt;-->
+<!--                    <merge>true</merge>-->
+<!--                    <includes>-->
+<!--                        <include>**/*</include>-->
+<!--                    </includes>-->
+<!--                    <repositoryName>project-luksdk-java</repositoryName>&lt;!&ndash;对应github上创建的仓库名称 name&ndash;&gt;-->
+<!--                    <repositoryOwner>CFGameTech</repositoryOwner>&lt;!&ndash;github 仓库所有者即登录用户名&ndash;&gt;-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>site</goal>-->
+<!--                        </goals>-->
+<!--                        <phase>deploy</phase>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 
+    <!-- 版本控制 -->
+    <scm>
+        <url>https://github.com/CFGameTech/project-luksdk-java/tree/master</url>
+        <connection>scm:git:https://github.com/CFGameTech/project-luksdk-java.git</connection>
+        <developerConnection>scm:git:https://github.com/CFGameTech/project-luksdk-java.git</developerConnection>
+    </scm>
+
+    <!-- 开发者信息 -->
+    <developers>
+        <developer>
+            <name>LUKSDK</name>
+            <email>developer@luk.live</email>
+        </developer>
+    </developers>
+
+    <!-- 开源协议 -->
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
 </project>

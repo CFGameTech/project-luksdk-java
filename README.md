@@ -7,33 +7,22 @@
 可通过以下方式引入依赖
 
 ```xml
-<repositories>
-    <repository>
-        <id>project-luksdk-java</id>
-        <url>https://raw.github.com/{仓库所有人}/mvn-repo/master</url>
-        <snapshots>
-            <enabled>true</enabled>
-            <updatePolicy>always</updatePolicy>
-        </snapshots>
-    </repository>
-</repositories>
-
-<dependencies>
-    <dependency>
-        <groupId>com.luksdk</groupId>
-        <artifactId>java</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </dependency>
-</dependencies>
+<dependency>
+    <groupId>io.github.cfgametech</groupId>
+    <artifactId>luksdk</artifactId>
+    <version>0.0.1</version>
+</dependency>
 ```
 
 # 示例代码
+
 ```java
 package org.example;
 
-import com.luksdk.SDK;
-import com.luksdk.SDK.*;
-import com.luksdk.SDK.Beans.*;
+import io.github.cfgametech.Response;
+import io.github.cfgametech.SDK;
+import io.github.cfgametech.beans.GetChannelTokenRequest;
+import io.github.cfgametech.beans.GetChannelTokenResponse;
 
 public class Main {
     public static void main(String[] args) throws IllegalAccessException {
@@ -57,7 +46,7 @@ public class Main {
             response.setToken("token");
 
             // 设置 Token 过期时间
-            response.setLeftTime(7200);
+            response.setExpirationTime(7200);
 
             return response;
         });
