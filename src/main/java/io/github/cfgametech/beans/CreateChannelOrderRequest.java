@@ -23,6 +23,18 @@ public class CreateChannelOrderRequest {
     @JsonProperty("sign")
     private String sign;
 
+    /**
+     * 时间戳
+     */
+    @JsonProperty("timestamp")
+    private long timestamp;
+
+    /**
+     * 随机值
+     */
+    @JsonProperty("nonce")
+    private String nonce;
+
     public List<Entry> getData() {
         return data;
     }
@@ -37,6 +49,32 @@ public class CreateChannelOrderRequest {
 
     public void setSign(String sign) {
         this.sign = sign;
+    }
+
+    public String getNonce() {
+        return nonce;
+    }
+
+    public void setNonce(String nonce) {
+        this.nonce = nonce;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return "CreateChannelOrderRequest{" +
+                "data=" + data +
+                ", sign='" + sign + '\'' +
+                ", timestamp=" + timestamp +
+                ", nonce='" + nonce + '\'' +
+                '}';
     }
 
     /**

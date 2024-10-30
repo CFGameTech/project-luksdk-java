@@ -72,9 +72,9 @@ public class SignUtils {
         for (Field field : fields) {
             field.setAccessible(true);
             if (field.isAnnotationPresent(JsonProperty.class)) {
-                // 只处理基本数据类型
+                // 只处理基本数据类型和 String
                 JsonProperty jsonProperty = field.getAnnotation(JsonProperty.class);
-                if (field.getType().isPrimitive()) {
+                if (field.getType().isPrimitive() || field.getType().equals(String.class)) {
                     map.put(jsonProperty.value(), field.get(obj));
                 }
             }

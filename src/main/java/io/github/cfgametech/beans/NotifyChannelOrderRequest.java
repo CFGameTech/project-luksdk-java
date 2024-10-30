@@ -20,6 +20,18 @@ public class NotifyChannelOrderRequest {
      */
     @JsonProperty("sign")
     private String sign;
+    
+    /**
+     * 时间戳
+     */
+    @JsonProperty("timestamp")
+    private long timestamp;
+    
+    /**
+     * 随机值
+     */
+    @JsonProperty("nonce")
+    private String nonce;
 
     public List<Entry> getData() {
         return data;
@@ -37,11 +49,29 @@ public class NotifyChannelOrderRequest {
         this.sign = sign;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getNonce() {
+        return nonce;
+    }
+
+    public void setNonce(String nonce) {
+        this.nonce = nonce;
+    }
+
     @Override
     public String toString() {
         return "NotifyChannelOrderRequest{" +
                 "data=" + data +
                 ", sign='" + sign + '\'' +
+                ", timestamp=" + timestamp +
+                ", nonce='" + nonce + '\'' +
                 '}';
     }
 
