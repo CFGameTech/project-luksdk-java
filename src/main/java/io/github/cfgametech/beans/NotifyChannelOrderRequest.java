@@ -21,7 +21,6 @@ public class NotifyChannelOrderRequest {
     @JsonProperty("sign")
     private String sign;
 
-
     public List<Entry> getData() {
         return data;
     }
@@ -36,6 +35,14 @@ public class NotifyChannelOrderRequest {
 
     public void setSign(String sign) {
         this.sign = sign;
+    }
+
+    @Override
+    public String toString() {
+        return "NotifyChannelOrderRequest{" +
+                "data=" + data +
+                ", sign='" + sign + '\'' +
+                '}';
     }
 
     /**
@@ -182,5 +189,20 @@ public class NotifyChannelOrderRequest {
             this.timestamp = timestamp;
         }
 
+        @Override
+        public String toString() {
+            return "Entry{" +
+                    "gameId=" + gameId +
+                    ", channelId=" + channelId +
+                    ", userId='" + userId + '\'' +
+                    ", gameOrderId='" + gameOrderId + '\'' +
+                    ", token='" + token + '\'' +
+                    ", coinsCost=" + coinsCost +
+                    ", coinsAward=" + coinsAward +
+                    ", scoreCost=" + scoreCost +
+                    ", scoreAward=" + scoreAward +
+                    ", timestamp=" + timestamp +
+                    '}';
+        }
     }
 }

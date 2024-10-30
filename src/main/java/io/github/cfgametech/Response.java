@@ -40,6 +40,15 @@ public class Response<T> {
         return data;
     }
 
+    @Override
+    public String toString() {
+        return "Response{" +
+                "code=" + code +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
+                '}';
+    }
+
     /**
      * @return 是否成功
      */

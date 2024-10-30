@@ -1,5 +1,7 @@
 package io.github.cfgametech.sign;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.lang.reflect.Field;
 import java.security.MessageDigest;
 import java.util.HashMap;
@@ -69,7 +71,13 @@ public class SignUtils {
         Field[] fields = obj.getClass().getDeclaredFields();
         for (Field field : fields) {
             field.setAccessible(true);
-            map.put(field.getName(), field.get(obj));
+            if (field.isAnnotationPresent(JsonProperty.class)) {
+                // 只处理基本数据类型
+                JsonProperty jsonProperty = field.getAnnotation(JsonProperty.class);
+                if (field.getType().isPrimitive()) {
+                    map.put(jsonProperty.value(), field.get(obj));
+                }
+            }
         }
         return map;
     }

@@ -17,7 +17,7 @@ public class RefreshChannelTokenResponse {
      * 剩余时间用于避免时区问题
      */
     @JsonProperty("left_time")
-    private long expirationTime;
+    private long leftTime;
 
     public String getToken() {
         return token;
@@ -27,11 +27,41 @@ public class RefreshChannelTokenResponse {
         this.token = token;
     }
 
-    public long getExpirationTime() {
-        return expirationTime;
+    public long getLeftTime() {
+        return leftTime;
     }
 
-    public void setExpirationTime(long expirationTime) {
-        this.expirationTime = expirationTime;
+    public void setLeftTime(long leftTime) {
+        this.leftTime = leftTime;
+    }
+
+    @Override
+    public String toString() {
+        return "RefreshChannelTokenResponse{" +
+                "token='" + token + '\'' +
+                ", leftTime=" + leftTime +
+                '}';
+    }
+
+    public static class Builder {
+       private final RefreshChannelTokenResponse response;
+       
+       public Builder() {
+           response = new RefreshChannelTokenResponse();
+       }
+       
+       public Builder setToken(String token) {
+           response.setToken(token);
+           return this;
+       }
+       
+       public Builder setLeftTime(long leftTime) {
+           response.setLeftTime(leftTime);
+           return this;
+       }
+       
+       public RefreshChannelTokenResponse build() {
+           return response;
+       }
     }
 }

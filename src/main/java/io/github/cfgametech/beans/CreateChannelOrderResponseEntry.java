@@ -7,6 +7,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class CreateChannelOrderResponseEntry {
     /**
+     * 订单创建成功
+     */
+    public static final int STATUS_SUCCESS = 1; 
+    
+    /**
+     * 订单创建失败
+     */
+    public static final int STATUS_FAILED = 0;
+    
+    /**
      * 创建订单的用户 ID
      */
     @JsonProperty("c_uid")
@@ -62,5 +72,46 @@ public class CreateChannelOrderResponseEntry {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "CreateChannelOrderResponseEntry{" +
+                "userId='" + userId + '\'' +
+                ", orderId='" + orderId + '\'' +
+                ", coins=" + coins +
+                ", status=" + status +
+                '}';
+    }
+
+    public static class Builder {
+        private final CreateChannelOrderResponseEntry entry;
+        
+        public Builder() {
+            entry = new CreateChannelOrderResponseEntry();
+        }
+        
+        public Builder setUserId(String userId) {
+            entry.setUserId(userId);
+            return this;
+        }
+        
+        public Builder setOrderId(String orderId) {
+            entry.setOrderId(orderId);
+            return this;
+        }
+        
+        public Builder setCoins(long coins) {
+            entry.setCoins(coins);
+            return this;
+        }
+        
+        public Builder setStatus(int status) {
+            entry.setStatus(status);
+            return this;
+        }
+        
+        public CreateChannelOrderResponseEntry build() {
+            return entry;
+        }
+    }
 }
 

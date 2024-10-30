@@ -61,4 +61,46 @@ public class GetChannelUserInfoResponse {
     public void setCoins(long coins) {
         this.coins = coins;
     }
+
+    @Override
+    public String toString() {
+        return "GetChannelUserInfoResponse{" +
+                "userId='" + userId + '\'' +
+                ", name='" + name + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", coins=" + coins +
+                '}';
+    }
+
+    public static class Builder {
+        private GetChannelUserInfoResponse response;
+        
+        public Builder() {
+            this.response = new GetChannelUserInfoResponse();
+        }
+        
+        public Builder setUserId(String userId) {
+            this.response.setUserId(userId);
+            return this;
+        }
+        
+        public Builder setName(String name) {
+            this.response.setName(name);
+            return this;
+        }
+        
+        public Builder setAvatar(String avatar) {
+            this.response.setAvatar(avatar);
+            return this;
+        }
+        
+        public Builder setCoins(long coins) {
+            this.response.setCoins(coins);
+            return this;
+        }
+        
+        public GetChannelUserInfoResponse build() {
+            return this.response;
+        }
+    }
 }

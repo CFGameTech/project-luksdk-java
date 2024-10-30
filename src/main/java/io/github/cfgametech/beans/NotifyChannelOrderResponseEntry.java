@@ -61,4 +61,46 @@ public class NotifyChannelOrderResponseEntry {
     public void setScore(long score) {
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        return "NotifyChannelOrderResponseEntry{" +
+                "userId='" + userId + '\'' +
+                ", orderId='" + orderId + '\'' +
+                ", coins=" + coins +
+                ", score=" + score +
+                '}';
+    }
+
+    public static class Builder {
+        private final NotifyChannelOrderResponseEntry entry;
+        
+        public Builder() {
+            this.entry = new NotifyChannelOrderResponseEntry();
+        }
+        
+        public Builder setUserId(String userId) {
+            this.entry.setUserId(userId);
+            return this;
+        }
+        
+        public Builder setOrderId(String orderId) {
+            this.entry.setOrderId(orderId);
+            return this;
+        }
+        
+        public Builder setCoins(long coins) {
+            this.entry.setCoins(coins);
+            return this;
+        }
+        
+        public Builder setScore(long score) {
+            this.entry.setScore(score);
+            return this;
+        }
+        
+        public NotifyChannelOrderResponseEntry build() {
+            return this.entry;
+        }
+    }
 }

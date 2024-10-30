@@ -6,7 +6,7 @@
 
     <groupId>io.github.cfgametech</groupId>
     <artifactId>luksdk</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.3</version>
 
     <name>luksdk</name>
     <description>LUKSDK 是面向 LUKSDK 后台接入的 SDK 集成，用于帮助开发者快速接入 LUKSDK。</description>
@@ -24,6 +24,12 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

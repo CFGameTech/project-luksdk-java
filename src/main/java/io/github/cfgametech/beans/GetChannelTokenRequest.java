@@ -75,4 +75,15 @@ public class GetChannelTokenRequest {
     public void setSign(String sign) {
         this.sign = sign;
     }
+
+    @Override
+    public String toString() {
+        return "GetChannelTokenRequest{" +
+                "channelId=" + channelId +
+                ", userId='" + userId + '\'' +
+                ", code='" + code + '\'' +
+                ", timestamp=" + timestamp +
+                ", sign='" + sign + '\'' +
+                '}';
+    }
 }

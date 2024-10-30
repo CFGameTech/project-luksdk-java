@@ -10,7 +10,7 @@
 <dependency>
     <groupId>io.github.cfgametech</groupId>
     <artifactId>luksdk</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 </dependency>
 ```
 
@@ -46,7 +46,7 @@ public class Main {
             response.setToken("token");
 
             // 设置 Token 过期时间
-            response.setExpirationTime(7200);
+            response.setLeftTime(7200);
 
             return response;
         });

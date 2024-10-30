@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
+// [{1003 "invalid signature"}, {1003 "invalid signature"}]
+
 /**
  * CreateChannelOrderRequest 类被用于解析来自 LUKSDK 获取创建订单的请求参数。 
  */
@@ -165,6 +167,21 @@ public class CreateChannelOrderRequest {
 
         public void setTimestamp(long timestamp) {
             this.timestamp = timestamp;
+        }
+
+        @Override
+        public String toString() {
+            return "Entry{" +
+                    "gameId=" + gameId +
+                    ", channelId=" + channelId +
+                    ", roomId='" + roomId + '\'' +
+                    ", userId='" + userId + '\'' +
+                    ", coinsCost=" + coinsCost +
+                    ", scoreCost=" + scoreCost +
+                    ", gameOrderId='" + gameOrderId + '\'' +
+                    ", token='" + token + '\'' +
+                    ", timestamp=" + timestamp +
+                    '}';
         }
     }
 

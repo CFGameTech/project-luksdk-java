@@ -182,6 +182,19 @@ public class NotifyGameRequest {
         this.sign = sign;
     }
 
+    @Override
+    public String toString() {
+        return "NotifyGameRequest{" +
+                "channelId=" + channelId +
+                ", gameId=" + gameId +
+                ", notifyType=" + notifyType +
+                ", ext='" + ext + '\'' +
+                ", data='" + data + '\'' +
+                ", timestamp=" + timestamp +
+                ", sign='" + sign + '\'' +
+                '}';
+    }
+
     /**
      * 游戏开始前的数据
      */
@@ -254,6 +267,17 @@ public class NotifyGameRequest {
 
         public void setGameSetting(String gameSetting) {
             this.gameSetting = gameSetting;
+        }
+
+        @Override
+        public String toString() {
+            return "StartBefore{" +
+                    "roomId=" + roomId +
+                    ", roundId=" + roundId +
+                    ", playerReadyStatus=" + playerReadyStatus +
+                    ", notifyAction=" + notifyAction +
+                    ", gameSetting='" + gameSetting + '\'' +
+                    '}';
         }
     }
 
@@ -330,6 +354,17 @@ public class NotifyGameRequest {
         public void setNotifyAction(int notifyAction) {
             this.notifyAction = notifyAction;
         }
+
+        @Override
+        public String toString() {
+            return "Gaming{" +
+                    "roomId=" + roomId +
+                    ", roundId=" + roundId +
+                    ", playerNum=" + playerNum +
+                    ", playerIds=" + playerIds +
+                    ", notifyAction=" + notifyAction +
+                    '}';
+        }
     }
 
     /**
@@ -404,6 +439,17 @@ public class NotifyGameRequest {
 
         public void setNotifyAction(int notifyAction) {
             this.notifyAction = notifyAction;
+        }
+
+        @Override
+        public String toString() {
+            return "End{" +
+                    "roomId=" + roomId +
+                    ", roundId=" + roundId +
+                    ", rank=" + rank +
+                    ", isForceEnd=" + isForceEnd +
+                    ", notifyAction=" + notifyAction +
+                    '}';
         }
     }
 }
