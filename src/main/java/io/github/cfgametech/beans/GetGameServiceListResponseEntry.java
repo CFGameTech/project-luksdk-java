@@ -7,7 +7,7 @@ public class GetGameServiceListResponseEntry {
      * 游戏 ID
      */
     @JsonProperty("g_id")
-    private String id;
+    private int id;
 
     /**
      * 游戏名称
@@ -28,11 +28,11 @@ public class GetGameServiceListResponseEntry {
     @JsonProperty("g_url")
     private String url;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -77,7 +77,7 @@ public class GetGameServiceListResponseEntry {
             this.entry = new GetGameServiceListResponseEntry();
         }
         
-        public Builder setId(String id) {
+        public Builder setId(int id) {
             this.entry.setId(id);
             return this;
         }
