@@ -85,16 +85,27 @@ public class SignUtils {
     private static Map<String, String> mapToStringMap(Map<String, Object> map) {
         Map<String, String> stringMap = new HashMap<>();
         for (Map.Entry<String, Object> entry : map.entrySet()) {
-            switch (entry.getValue()) {
-                case String value -> {if (value.isEmpty() || entry.getKey().equals("sign")) {continue;}}
-                case Number value -> {if (value.doubleValue() == 0) {continue;}}
-                case Boolean value -> {if (!value) {continue;}}
-                case null -> {continue;}
-                default -> {}
+            Object value = entry.getValue();
+
+            if (value instanceof String) {
+                if (((String) value).isEmpty() || entry.getKey().equals("sign")) {
+                    continue;
+                }
+            } else if (value instanceof Number) {
+                if (((Number) value).doubleValue() == 0) {
+                    continue;
+                }
+            } else if (value instanceof Boolean) {
+                if (!((Boolean) value)) {
+                    continue;
+                }
+            } else if (value == null) {
+                continue;
             }
 
-            stringMap.put(entry.getKey(), entry.getValue().toString());
+            stringMap.put(entry.getKey(), value.toString());
         }
         return stringMap;
     }
+
 }

@@ -60,10 +60,11 @@ public class Response<T> {
         if (err == null) {
             return this;
         }
-        if (err instanceof Exceptions.SDKError customError) {
+        if (err instanceof Exceptions.SDKError) {
+            Exceptions.SDKError customError = (Exceptions.SDKError) err;
             this.code = customError.getCode();
             this.msg = customError.getMessage();
-        }else {
+        } else {
             this.msg = err.getMessage();
         }
 

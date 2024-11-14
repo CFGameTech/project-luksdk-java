@@ -8,7 +8,7 @@ import org.junit.Test;
 public class SignUtilsTest {
     @Test
     public void Signature() throws IllegalAccessException, Exceptions.SDKError {
-        SDK sdk = new SDK("123456");
+        SDK sdk = new SDK("123456", "");
         CreateChannelOrderRequest request = new CreateChannelOrderRequest();
         
         request.setTimestamp(123456);

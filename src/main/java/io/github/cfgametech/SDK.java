@@ -1,17 +1,102 @@
 package io.github.cfgametech;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cfgametech.beans.*;
 import io.github.cfgametech.exceptions.Exceptions;
 import io.github.cfgametech.sign.SignUtils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.rmi.ServerError;
 import java.util.*;
 
 public class SDK {
-
     private final String signSecret;
+    private final String domain;
+    private final String apiPrefix = "/sdk";
 
-    public SDK(String signSecret) {
+    /**
+     * @param signSecret 签名密钥
+     * @param domain 域名，如：<a href="https://www.abc.example">https://www.abc.example</a>
+     */
+    public SDK(String signSecret, String domain) {
         this.signSecret = signSecret;
+        this.domain = domain;
+    }
+
+    /**
+     * @param channelId 渠道 ID
+     * @return 包含游戏列表的响应
+     */
+    public Response<GetGameServiceListResponse> GetGameServiceList(int channelId) throws Exception {
+        GetGameServiceListRequest request = new GetGameServiceListRequest.Builder()
+                .setChannelId(channelId)
+                .setTimestamp(System.currentTimeMillis())
+                .build();
+        return GetGameServiceList(request);
+    }
+
+    /**
+     * @param request 给定的请求，其中签名字段如果为空字符串将自动计算签名
+     * @return 包含游戏列表的响应
+     */
+    public Response<GetGameServiceListResponse> GetGameServiceList(GetGameServiceListRequest request) throws IllegalAccessException, IOException {
+        if (domain.isEmpty()) {
+            throw new RuntimeException("domain is empty");
+        }
+        
+        String url = domain + apiPrefix + "/get_game_service_list/";
+        ObjectMapper objectMapper = new ObjectMapper();
+        if (request.getSign() == null || request.getSign().isEmpty()) {
+            request.setSign(generateSignature(request));
+        }
+        String jsonInputString = objectMapper.writeValueAsString(request);
+
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        con.setRequestMethod("POST");
+
+        con.setRequestProperty("Content-Type", "application/json");
+
+        con.setDoOutput(true);
+
+        try (OutputStream os = con.getOutputStream()) {
+            byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+        }
+
+        int responseCode = con.getResponseCode();
+        System.out.println("POST Response Code: " + responseCode);
+
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            String responseJsonStr = response.toString();
+            ObjectMapper responseObjectMapper = new ObjectMapper();
+            Response<GetGameServiceListResponse> responseObject = responseObjectMapper.readValue(responseJsonStr, new TypeReference<Response<GetGameServiceListResponse>>() {});
+            
+            if (responseObject.getCode() != 0) {
+                throw new RuntimeException("Error Code: " + responseObject.getCode() + " Message: " + responseObject.getMessage());
+            }
+            return responseObject;
+        } else {
+            throw new RuntimeException("Url: " + url + " Error Code: " + responseCode);
+        }
+
     }
 
     /**

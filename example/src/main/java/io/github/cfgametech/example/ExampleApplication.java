@@ -26,7 +26,7 @@ public class ExampleApplication {
 
     @PostConstruct
     public void init() {
-        sdk = new SDK("fa7ad21fdbe10218024f88538a86");
+        sdk = new SDK("fa7ad21fdbe10218024f88538a86", "https://api.luk.live");
     }
 
     @RestController
@@ -92,6 +92,13 @@ public class ExampleApplication {
         public Response<Empty> notifyGame(@RequestBody NotifyGameRequest request) {
             logger.info("notify_game - request: {}", request);
             return sdk.notifyGame(request, req -> new Empty());
+        }
+
+        @PostMapping("/get_game_service_list")
+        public Response<GetGameServiceListResponse> getGameServiceList() throws Exception {
+            Response<GetGameServiceListResponse> response = sdk.GetGameServiceList(1010997);
+            logger.info("get_game_service_list - response: {}", response);
+            return response;
         }
     }
 }
