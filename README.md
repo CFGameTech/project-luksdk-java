@@ -10,7 +10,7 @@
 <dependency>
     <groupId>io.github.cfgametech</groupId>
     <artifactId>luksdk</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.5</version>
 </dependency>
 ```
 
