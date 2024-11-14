@@ -27,7 +27,7 @@ import io.github.cfgametech.beans.GetChannelTokenResponse;
 public class Main {
     public static void main(String[] args) throws IllegalAccessException {
         // 初始化 SDK
-        SDK sdk = new SDK("123465");
+        SDK sdk = new SDK("123465", "https://www.example.com");
 
         // 来自 SDK 请求的参数结构
         GetChannelTokenRequest request = new GetChannelTokenRequest();
