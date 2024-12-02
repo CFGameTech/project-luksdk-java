@@ -25,11 +25,25 @@ public class SDK {
 
     /**
      * @param signSecret 签名密钥
-     * @param domain 域名，如：<a href="https://www.abc.example">https://www.abc.example</a>
+     * @param domain     域名，如：<a href="https://www.abc.example">https://www.abc.example</a>
      */
     public SDK(String signSecret, String domain) {
         this.signSecret = signSecret;
         this.domain = domain;
+    }
+
+    /**
+     * @param channelId 渠道 id
+     * @param gameId 游戏 id
+     * @param data 需发放的道具信息
+     */
+    public Response<IssuancePropsResponse> IssuanceProps(int channelId, int gameId, List<IssuancePropsRequestEntry> data) throws IllegalAccessException, IOException {
+        return IssuanceProps(new IssuancePropsRequest.Builder()
+                .setChannelId(channelId)
+                .setGameId(gameId)
+                .setData(data)
+                .setTimestamp(System.currentTimeMillis())
+                .build());
     }
 
     /**
@@ -46,13 +60,68 @@ public class SDK {
 
     /**
      * @param request 给定的请求，其中签名字段如果为空字符串将自动计算签名
+     * @return 需发放的道具信息
+     */
+    public Response<IssuancePropsResponse> IssuanceProps(IssuancePropsRequest request) throws IllegalAccessException, IOException {
+        if (domain.isEmpty()) {
+            throw new RuntimeException("domain is empty");
+        }
+
+        String url = domain + apiPrefix + "/issuance_props/";
+        ObjectMapper objectMapper = new ObjectMapper();
+        if (request.getSign() == null || request.getSign().isEmpty()) {
+            request.setSign(generateSignature(request));
+        }
+        String jsonInputString = objectMapper.writeValueAsString(request);
+
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        con.setRequestMethod("POST");
+
+        con.setRequestProperty("Content-Type", "application/json");
+
+        con.setDoOutput(true);
+
+        try (OutputStream os = con.getOutputStream()) {
+            byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+        }
+
+        int responseCode = con.getResponseCode();
+        System.out.println("POST Response Code: " + responseCode);
+
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            String responseJsonStr = response.toString();
+            ObjectMapper responseObjectMapper = new ObjectMapper();
+            Response<IssuancePropsResponse> responseObject = responseObjectMapper.readValue(responseJsonStr, new TypeReference<Response<IssuancePropsResponse>>() {
+            });
+
+            if (responseObject.getCode() != 0) {
+                throw new RuntimeException("Error Code: " + responseObject.getCode() + " Message: " + responseObject.getMessage());
+            }
+            return responseObject;
+        } else {
+            throw new RuntimeException("Url: " + url + " Error Code: " + responseCode);
+        }
+    }
+
+    /**
+     * @param request 给定的请求，其中签名字段如果为空字符串将自动计算签名
      * @return 包含游戏列表的响应
      */
     public Response<GetGameServiceListResponse> GetGameServiceList(GetGameServiceListRequest request) throws IllegalAccessException, IOException {
         if (domain.isEmpty()) {
             throw new RuntimeException("domain is empty");
         }
-        
+
         String url = domain + apiPrefix + "/get_game_service_list/";
         ObjectMapper objectMapper = new ObjectMapper();
         if (request.getSign() == null || request.getSign().isEmpty()) {
@@ -87,8 +156,9 @@ public class SDK {
 
             String responseJsonStr = response.toString();
             ObjectMapper responseObjectMapper = new ObjectMapper();
-            Response<GetGameServiceListResponse> responseObject = responseObjectMapper.readValue(responseJsonStr, new TypeReference<Response<GetGameServiceListResponse>>() {});
-            
+            Response<GetGameServiceListResponse> responseObject = responseObjectMapper.readValue(responseJsonStr, new TypeReference<Response<GetGameServiceListResponse>>() {
+            });
+
             if (responseObject.getCode() != 0) {
                 throw new RuntimeException("Error Code: " + responseObject.getCode() + " Message: " + responseObject.getMessage());
             }
