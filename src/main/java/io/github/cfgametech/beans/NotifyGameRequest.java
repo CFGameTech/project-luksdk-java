@@ -203,13 +203,13 @@ public class NotifyGameRequest {
          * 房间 ID
          */
         @JsonProperty("room_id")
-        private int roomId;
+        private String roomId;
 
         /**
          * 游戏轮次 ID
          */
         @JsonProperty("round_id")
-        private int roundId;
+        private String roundId;
 
         /**
          * 玩家准备状态，key 为玩家 uid，value 为是否准备
@@ -229,19 +229,19 @@ public class NotifyGameRequest {
         @JsonProperty("game_setting")
         private String gameSetting;
 
-        public int getRoomId() {
+        public String getRoomId() {
             return roomId;
         }
 
-        public void setRoomId(int roomId) {
+        public void setRoomId(String roomId) {
             this.roomId = roomId;
         }
 
-        public int getRoundId() {
+        public String getRoundId() {
             return roundId;
         }
 
-        public void setRoundId(int roundId) {
+        public void setRoundId(String roundId) {
             this.roundId = roundId;
         }
 
@@ -289,13 +289,13 @@ public class NotifyGameRequest {
          * 房间 ID
          */
         @JsonProperty("room_id")
-        private int roomId;
+        private String roomId;
 
         /**
          * 游戏轮次 ID
          */
         @JsonProperty("round_id")
-        private int roundId;
+        private String roundId;
 
         /**
          * 玩家数量
@@ -315,19 +315,19 @@ public class NotifyGameRequest {
         @JsonProperty("notify_action")
         private int notifyAction;
 
-        public int getRoomId() {
+        public String getRoomId() {
             return roomId;
         }
 
-        public void setRoomId(int roomId) {
+        public void setRoomId(String roomId) {
             this.roomId = roomId;
         }
 
-        public int getRoundId() {
+        public String getRoundId() {
             return roundId;
         }
 
-        public void setRoundId(int roundId) {
+        public void setRoundId(String roundId) {
             this.roundId = roundId;
         }
 
@@ -375,13 +375,13 @@ public class NotifyGameRequest {
          * 房间 ID
          */
         @JsonProperty("room_id")
-        private int roomId;
+        private String roomId;
 
         /**
          * 游戏轮次 ID
          */
         @JsonProperty("round_id")
-        private int roundId;
+        private String roundId;
 
         /**
          * 有序排行榜，根据玩家 ID 以分数降序排列
@@ -401,19 +401,19 @@ public class NotifyGameRequest {
         @JsonProperty("notify_action")
         private int notifyAction;
 
-        public int getRoomId() {
+        public String getRoomId() {
             return roomId;
         }
 
-        public void setRoomId(int roomId) {
+        public void setRoomId(String roomId) {
             this.roomId = roomId;
         }
 
-        public int getRoundId() {
+        public String getRoundId() {
             return roundId;
         }
 
-        public void setRoundId(int roundId) {
+        public void setRoundId(String roundId) {
             this.roundId = roundId;
         }
 

@@ -26,7 +26,7 @@ public class ExampleApplication {
 
     @PostConstruct
     public void init() {
-        sdk = new SDK("fa7ad21fdbe10218024f88538a86", "https://api.luk.live");
+        sdk = new SDK("e6b232b4a0b60b189ab0bd9a4793", "https://api.luk.live");
     }
 
     @RestController
