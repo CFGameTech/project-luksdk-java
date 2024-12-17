@@ -138,6 +138,12 @@ public class NotifyChannelOrderRequest {
          */
         @JsonProperty("timestamp")
         private long timestamp;
+        
+        /**
+         * 订单状态 1订单成功 2退款
+         */
+        @JsonProperty("status")
+        private int status;
 
         public int getGameId() {
             return gameId;
@@ -219,6 +225,14 @@ public class NotifyChannelOrderRequest {
             this.timestamp = timestamp;
         }
 
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
+        }
+
         @Override
         public String toString() {
             return "Entry{" +
@@ -232,6 +246,7 @@ public class NotifyChannelOrderRequest {
                     ", scoreCost=" + scoreCost +
                     ", scoreAward=" + scoreAward +
                     ", timestamp=" + timestamp +
+                    ", status=" + status +
                     '}';
         }
     }
