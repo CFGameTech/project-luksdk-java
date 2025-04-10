@@ -8,6 +8,11 @@ import java.util.List;
  * NotifyChannelOrderRequest 类被用于解析来自 LUKSDK 下注开奖通知结果的请求参数
  */
 public class NotifyChannelOrderRequest {
+    /**
+     * 唯一请求序列号
+     */
+    @JsonProperty("unique_seq")
+    private String uniqueSeq;
 
     /**
      * 下注开奖通知结果的具体数据
@@ -65,10 +70,19 @@ public class NotifyChannelOrderRequest {
         this.nonce = nonce;
     }
 
+    public String getUniqueSeq() {
+        return uniqueSeq;
+    }
+
+    public void setUniqueSeq(String uniqueSeq) {
+        this.uniqueSeq = uniqueSeq;
+    }
+
     @Override
     public String toString() {
         return "NotifyChannelOrderRequest{" +
-                "data=" + data +
+                "uniqueSeq='" + uniqueSeq + '\'' +
+                ", data=" + data +
                 ", sign='" + sign + '\'' +
                 ", timestamp=" + timestamp +
                 ", nonce='" + nonce + '\'' +
@@ -79,12 +93,7 @@ public class NotifyChannelOrderRequest {
      * 通知结果的具体数据条目
      */
     public static class Entry {
-        /**
-         * 唯一请求序列号
-         */
-        @JsonProperty("unique_seq")
-        private String uniqueSeq;
-        
+     
         /**
          * 游戏 ID
          */
@@ -150,15 +159,7 @@ public class NotifyChannelOrderRequest {
          */
         @JsonProperty("status")
         private int status;
-        
-        public String getUniqueSeq() {
-            return uniqueSeq;
-        }
-        
-        public void setUniqueSeq(String uniqueSeq) {
-            this.uniqueSeq = uniqueSeq;
-        }
-
+       
         public int getGameId() {
             return gameId;
         }
@@ -250,8 +251,7 @@ public class NotifyChannelOrderRequest {
         @Override
         public String toString() {
             return "Entry{" +
-                    "uniqueSeq='" + uniqueSeq + '\'' +
-                    ", gameId=" + gameId +
+                    "gameId=" + gameId +
                     ", channelId=" + channelId +
                     ", userId='" + userId + '\'' +
                     ", gameOrderId='" + gameOrderId + '\'' +
