@@ -58,6 +58,12 @@ public class NotifyGameRequest {
     public static final int ActionGameEnd = 8;
 
     /**
+     * 唯一请求序列号
+     */
+    @JsonProperty("unique_seq")
+    private String uniqueSeq;
+
+    /**
      * 渠道 ID
      */
     @JsonProperty("c_id")
@@ -125,6 +131,14 @@ public class NotifyGameRequest {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(this.data, End.class);
     }
+    
+    public String getUniqueSeq() {
+        return uniqueSeq;
+    }
+    
+    public void setUniqueSeq(String uniqueSeq) {
+        this.uniqueSeq = uniqueSeq;
+    }
 
     public int getChannelId() {
         return channelId;
@@ -185,7 +199,8 @@ public class NotifyGameRequest {
     @Override
     public String toString() {
         return "NotifyGameRequest{" +
-                "channelId=" + channelId +
+                "uniqueSeq='" + uniqueSeq + '\'' +
+                ", channelId=" + channelId +
                 ", gameId=" + gameId +
                 ", notifyType=" + notifyType +
                 ", ext='" + ext + '\'' +

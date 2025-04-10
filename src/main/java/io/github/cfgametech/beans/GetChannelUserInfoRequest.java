@@ -7,6 +7,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class GetChannelUserInfoRequest {
     /**
+     * 唯一请求序列号
+     */
+    @JsonProperty("unique_seq")
+    private String uniqueSeq;
+    
+    /**
      * 游戏 ID
      */
     @JsonProperty("g_id")
@@ -41,6 +47,14 @@ public class GetChannelUserInfoRequest {
      */
     @JsonProperty("sign")
     private String sign;
+    
+    public String getUniqueSeq() {
+        return uniqueSeq;
+    }
+    
+    public void setUniqueSeq(String uniqueSeq) {
+        this.uniqueSeq = uniqueSeq;
+    }
 
     public int getChannelId() {
         return channelId;
@@ -93,7 +107,8 @@ public class GetChannelUserInfoRequest {
     @Override
     public String toString() {
         return "GetChannelUserInfoRequest{" +
-                "gameId=" + gameId +
+                "uniqueSeq='" + uniqueSeq + '\'' +
+                ", gameId=" + gameId +
                 ", channelId=" + channelId +
                 ", userId='" + userId + '\'' +
                 ", token='" + token + '\'' +

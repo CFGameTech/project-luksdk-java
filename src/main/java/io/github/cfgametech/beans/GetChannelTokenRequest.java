@@ -6,6 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * GetChannelTokenRequest 类被用于解析来自 LUKSDK 通过接入方提供的用户 code 获取用户令牌的请求参数。 
  */
 public class GetChannelTokenRequest {
+
+    /**
+     * 唯一请求序列号
+     */
+    @JsonProperty("unique_seq")
+    private String uniqueSeq;
+    
     /**
      * 用户所属渠道 ID
      */
@@ -35,6 +42,14 @@ public class GetChannelTokenRequest {
      */
     @JsonProperty("sign")
     private String sign;
+
+    public String getUniqueSeq() {
+        return uniqueSeq;
+    }
+
+    public void setUniqueSeq(String uniqueSeq) {
+        this.uniqueSeq = uniqueSeq;
+    }
 
     public int getChannelId() {
         return channelId;
@@ -79,7 +94,8 @@ public class GetChannelTokenRequest {
     @Override
     public String toString() {
         return "GetChannelTokenRequest{" +
-                "channelId=" + channelId +
+                "uniqueSeq='" + uniqueSeq + '\'' +
+                ", channelId=" + channelId +
                 ", userId='" + userId + '\'' +
                 ", code='" + code + '\'' +
                 ", timestamp=" + timestamp +

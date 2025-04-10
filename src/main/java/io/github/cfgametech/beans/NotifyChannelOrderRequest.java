@@ -80,6 +80,12 @@ public class NotifyChannelOrderRequest {
      */
     public static class Entry {
         /**
+         * 唯一请求序列号
+         */
+        @JsonProperty("unique_seq")
+        private String uniqueSeq;
+        
+        /**
          * 游戏 ID
          */
         @JsonProperty("g_id")
@@ -144,6 +150,14 @@ public class NotifyChannelOrderRequest {
          */
         @JsonProperty("status")
         private int status;
+        
+        public String getUniqueSeq() {
+            return uniqueSeq;
+        }
+        
+        public void setUniqueSeq(String uniqueSeq) {
+            this.uniqueSeq = uniqueSeq;
+        }
 
         public int getGameId() {
             return gameId;
@@ -236,7 +250,8 @@ public class NotifyChannelOrderRequest {
         @Override
         public String toString() {
             return "Entry{" +
-                    "gameId=" + gameId +
+                    "uniqueSeq='" + uniqueSeq + '\'' +
+                    ", gameId=" + gameId +
                     ", channelId=" + channelId +
                     ", userId='" + userId + '\'' +
                     ", gameOrderId='" + gameOrderId + '\'' +
