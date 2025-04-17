@@ -8,30 +8,25 @@ import java.util.List;
  * NotifyChannelOrderRequest 类被用于解析来自 LUKSDK 下注开奖通知结果的请求参数
  */
 public class NotifyChannelOrderRequest {
-    /**
-     * 唯一请求序列号
-     */
-    @JsonProperty("unique_seq")
-    private String uniqueSeq;
 
     /**
      * 下注开奖通知结果的具体数据
      */
     @JsonProperty("data")
     private List<Entry> data;
-  
+
     /**
      * 来自 LUKSDK 的请求参数签名
      */
     @JsonProperty("sign")
     private String sign;
-    
+
     /**
      * 时间戳
      */
     @JsonProperty("timestamp")
     private long timestamp;
-    
+
     /**
      * 随机值
      */
@@ -70,19 +65,10 @@ public class NotifyChannelOrderRequest {
         this.nonce = nonce;
     }
 
-    public String getUniqueSeq() {
-        return uniqueSeq;
-    }
-
-    public void setUniqueSeq(String uniqueSeq) {
-        this.uniqueSeq = uniqueSeq;
-    }
-
     @Override
     public String toString() {
         return "NotifyChannelOrderRequest{" +
-                "uniqueSeq='" + uniqueSeq + '\'' +
-                ", data=" + data +
+                "data=" + data +
                 ", sign='" + sign + '\'' +
                 ", timestamp=" + timestamp +
                 ", nonce='" + nonce + '\'' +
@@ -93,7 +79,6 @@ public class NotifyChannelOrderRequest {
      * 通知结果的具体数据条目
      */
     public static class Entry {
-     
         /**
          * 游戏 ID
          */
@@ -153,13 +138,13 @@ public class NotifyChannelOrderRequest {
          */
         @JsonProperty("timestamp")
         private long timestamp;
-        
+
         /**
          * 订单状态 1订单成功 2退款
          */
         @JsonProperty("status")
         private int status;
-       
+
         public int getGameId() {
             return gameId;
         }

@@ -58,12 +58,6 @@ public class NotifyGameRequest {
     public static final int ActionGameEnd = 8;
 
     /**
-     * 唯一请求序列号
-     */
-    @JsonProperty("unique_seq")
-    private String uniqueSeq;
-
-    /**
      * 渠道 ID
      */
     @JsonProperty("c_id")
@@ -104,7 +98,7 @@ public class NotifyGameRequest {
      */
     @JsonProperty("sign")
     private String sign;
-    
+
     /**
      * @return 游戏开始前的数据
      * @throws JsonProcessingException 解析异常
@@ -130,14 +124,6 @@ public class NotifyGameRequest {
     public End getEnd() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(this.data, End.class);
-    }
-    
-    public String getUniqueSeq() {
-        return uniqueSeq;
-    }
-    
-    public void setUniqueSeq(String uniqueSeq) {
-        this.uniqueSeq = uniqueSeq;
     }
 
     public int getChannelId() {
@@ -199,8 +185,7 @@ public class NotifyGameRequest {
     @Override
     public String toString() {
         return "NotifyGameRequest{" +
-                "uniqueSeq='" + uniqueSeq + '\'' +
-                ", channelId=" + channelId +
+                "channelId=" + channelId +
                 ", gameId=" + gameId +
                 ", notifyType=" + notifyType +
                 ", ext='" + ext + '\'' +

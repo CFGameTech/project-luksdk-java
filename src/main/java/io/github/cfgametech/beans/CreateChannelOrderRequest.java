@@ -10,19 +10,13 @@ import java.util.List;
  * CreateChannelOrderRequest 类被用于解析来自 LUKSDK 获取创建订单的请求参数。 
  */
 public class CreateChannelOrderRequest {
-    
-    /**
-     * 唯一请求序列号
-     */
-    @JsonProperty("unique_seq")
-    private String uniqueSeq;
 
     /**
      * 订单数据列表
      */
     @JsonProperty("data")
     private List<Entry> data;
-    
+
     /**
      * 来自 LUKSDK 的请求参数签名
      */
@@ -73,20 +67,10 @@ public class CreateChannelOrderRequest {
         this.timestamp = timestamp;
     }
 
-
-    public String getUniqueSeq() {
-        return uniqueSeq;
-    }
-
-    public void setUniqueSeq(String uniqueSeq) {
-        this.uniqueSeq = uniqueSeq;
-    }
-
     @Override
     public String toString() {
         return "CreateChannelOrderRequest{" +
-                "uniqueSeq='" + uniqueSeq + '\'' +
-                ", data=" + data +
+                "data=" + data +
                 ", sign='" + sign + '\'' +
                 ", timestamp=" + timestamp +
                 ", nonce='" + nonce + '\'' +
@@ -114,7 +98,7 @@ public class CreateChannelOrderRequest {
          */
         @JsonProperty("c_room_id")
         private String roomId;
-        
+
         /**
          * 创建订单的用户 ID
          */

@@ -89,14 +89,9 @@ public class ExampleApplication {
         }
 
         @PostMapping("/notify_game")
-        public Response<Empty> notifyGame(@RequestBody NotifyGameRequest request) throws IllegalAccessException {
-            
-            
-            request.setSign(sdk.generateSignature(request));
-            Response<Empty> resp = sdk.notifyGame(request, req -> new Empty());
-            
-            logger.info("notify_game - request: {}, response: {}", request, resp);
-            return resp;
+        public Response<Empty> notifyGame(@RequestBody NotifyGameRequest request) {
+            logger.info("notify_game - request: {}", request);
+            return sdk.notifyGame(request, req -> new Empty());
         }
 
         @PostMapping("/get_game_service_list")

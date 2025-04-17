@@ -88,7 +88,7 @@ public class SignUtils {
             Object value = entry.getValue();
 
             if (value instanceof String) {
-                if (((String) value).isEmpty() || entry.getKey().equals("sign") || entry.getKey().equals("unique_seq") )  {
+                if (((String) value).isEmpty() || entry.getKey().equals("sign")) {
                     continue;
                 }
             } else if (value instanceof Number) {
