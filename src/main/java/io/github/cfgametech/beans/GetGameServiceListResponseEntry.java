@@ -28,6 +28,12 @@ public class GetGameServiceListResponseEntry {
     @JsonProperty("g_url")
     private String url;
 
+    /**
+     * 游戏预加载包地址
+     */
+    @JsonProperty("g_zip_url")
+    private String gZipUrl;
+
     public int getId() {
         return id;
     }
@@ -60,13 +66,22 @@ public class GetGameServiceListResponseEntry {
         this.url = url;
     }
 
+    public String getGZipUrl() {
+        return gZipUrl;
+    }
+
+    public void setGZipUrl(String gZipUrl) {
+        this.gZipUrl = gZipUrl;
+    }
+
     @Override
     public String toString() {
         return "GetGameServiceListResponseEntry{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", icon='" + icon + '\'' +
                 ", url='" + url + '\'' +
+                ", gZipUrl='" + gZipUrl + '\'' +
                 '}';
     }
 
@@ -94,6 +109,11 @@ public class GetGameServiceListResponseEntry {
         
         public Builder setUrl(String url) {
             this.entry.setUrl(url);
+            return this;
+        }
+        
+        public Builder setGZipUrl(String url) {
+            this.entry.gZipUrl = url;
             return this;
         }
         
