@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-// [{1003 "invalid signature"}, {1003 "invalid signature"}]
-
 /**
  * CreateChannelOrderRequest 类被用于解析来自 LUKSDK 获取创建订单的请求参数。 
  */

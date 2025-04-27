@@ -30,20 +30,6 @@ public class SDK {
     }
 
     /**
-     * @param channelId 渠道 id
-     * @param gameId 游戏 id
-     * @param data 需发放的道具信息
-     */
-    public Response<IssuancePropsResponse> IssuanceProps(int channelId, int gameId, List<IssuancePropsRequestEntry> data) throws IllegalAccessException, IOException {
-        return IssuanceProps(new IssuancePropsRequest.Builder()
-                .setChannelId(channelId)
-                .setGameId(gameId)
-                .setData(data)
-                .setTimestamp(System.currentTimeMillis())
-                .build());
-    }
-
-    /**
      * @param channelId 渠道 ID
      * @return 包含游戏列表的响应
      */
@@ -53,61 +39,6 @@ public class SDK {
                 .setTimestamp(System.currentTimeMillis())
                 .build();
         return GetGameServiceList(request);
-    }
-
-    /**
-     * @param request 给定的请求，其中签名字段如果为空字符串将自动计算签名
-     * @return 需发放的道具信息
-     */
-    public Response<IssuancePropsResponse> IssuanceProps(IssuancePropsRequest request) throws IllegalAccessException, IOException {
-        if (domain.isEmpty()) {
-            throw new RuntimeException("domain is empty");
-        }
-
-        String url = domain + apiPrefix + "/issuance_props/";
-        ObjectMapper objectMapper = new ObjectMapper();
-        if (request.getSign() == null || request.getSign().isEmpty()) {
-            request.setSign(generateSignature(request));
-        }
-        String jsonInputString = objectMapper.writeValueAsString(request);
-
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-        con.setRequestMethod("POST");
-
-        con.setRequestProperty("Content-Type", "application/json");
-
-        con.setDoOutput(true);
-
-        try (OutputStream os = con.getOutputStream()) {
-            byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
-            os.write(input, 0, input.length);
-        }
-
-        int responseCode = con.getResponseCode();
-        System.out.println("POST Response Code: " + responseCode);
-
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuilder response = new StringBuilder();
-            while ((inputLine = br.readLine()) != null) {
-                response.append(inputLine);
-            }
-
-            String responseJsonStr = response.toString();
-            ObjectMapper responseObjectMapper = new ObjectMapper();
-            Response<IssuancePropsResponse> responseObject = responseObjectMapper.readValue(responseJsonStr, new TypeReference<Response<IssuancePropsResponse>>() {
-            });
-
-            if (responseObject.getCode() != 0) {
-                throw new RuntimeException("Error Code: " + responseObject.getCode() + " Message: " + responseObject.getMessage());
-            }
-            return responseObject;
-        } else {
-            throw new RuntimeException("Url: " + url + " Error Code: " + responseCode);
-        }
     }
 
     /**
@@ -154,6 +85,63 @@ public class SDK {
             String responseJsonStr = response.toString();
             ObjectMapper responseObjectMapper = new ObjectMapper();
             Response<GetGameServiceListResponse> responseObject = responseObjectMapper.readValue(responseJsonStr, new TypeReference<Response<GetGameServiceListResponse>>() {
+            });
+
+            if (responseObject.getCode() != 0) {
+                throw new RuntimeException("Error Code: " + responseObject.getCode() + " Message: " + responseObject.getMessage());
+            }
+            return responseObject;
+        } else {
+            throw new RuntimeException("Url: " + url + " Error Code: " + responseCode);
+        }
+
+    }
+
+
+    /**
+     * @param request 给定的请求，其中签名字段如果为空字符串将自动计算签名
+     * @return 包含游戏列表的响应
+     */
+    public <T> Response<T> PublishControlEvent(PublishControlEventRequest request) throws IllegalAccessException, IOException {
+        if (domain.isEmpty()) {
+            throw new RuntimeException("domain is empty");
+        }
+
+        String url = domain + apiPrefix + "/publish_control_event/";
+        ObjectMapper objectMapper = new ObjectMapper();
+        if (request.getSign() == null || request.getSign().isEmpty()) {
+            request.setSign(generateSignature(request));
+        }
+        String jsonInputString = objectMapper.writeValueAsString(request);
+
+        URL obj = new URL(url);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+        con.setRequestMethod("POST");
+
+        con.setRequestProperty("Content-Type", "application/json");
+
+        con.setDoOutput(true);
+
+        try (OutputStream os = con.getOutputStream()) {
+            byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+        }
+
+        int responseCode = con.getResponseCode();
+        System.out.println("POST Response Code: " + responseCode);
+
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            String responseJsonStr = response.toString();
+            ObjectMapper responseObjectMapper = new ObjectMapper();
+            Response<T> responseObject = responseObjectMapper.readValue(responseJsonStr, new TypeReference<Response<T>>() {
             });
 
             if (responseObject.getCode() != 0) {
@@ -255,6 +243,12 @@ public class SDK {
     // NotifyGame 向渠道通知游戏状态
     @SafeVarargs
     public final Response<Empty> notifyGame(NotifyGameRequest request, RequestHandler<NotifyGameRequest, Empty>... successHandler) {
+        return generateHandler(signSecret, request.getSign(), request, successHandler);
+    }
+
+    // NotifyGame 游戏通知事件回调
+    @SafeVarargs
+    public final Response<Empty> notifyEvent(NotifyEventRequest request, RequestHandler<NotifyEventRequest, Empty>... successHandler) {
         return generateHandler(signSecret, request.getSign(), request, successHandler);
     }
 
