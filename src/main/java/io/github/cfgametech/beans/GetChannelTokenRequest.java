@@ -1,10 +1,12 @@
 package io.github.cfgametech.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * GetChannelTokenRequest 类被用于解析来自 LUKSDK 通过接入方提供的用户 code 获取用户令牌的请求参数。 
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GetChannelTokenRequest {
     /**
      * 用户所属渠道 ID

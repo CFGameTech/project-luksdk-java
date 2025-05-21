@@ -1,6 +1,7 @@
 package io.github.cfgametech;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cfgametech.beans.*;
 import io.github.cfgametech.exceptions.Exceptions;
@@ -84,6 +85,7 @@ public class SDK {
 
             String responseJsonStr = response.toString();
             ObjectMapper responseObjectMapper = new ObjectMapper();
+            responseObjectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             Response<GetGameServiceListResponse> responseObject = responseObjectMapper.readValue(responseJsonStr, new TypeReference<Response<GetGameServiceListResponse>>() {
             });
 
@@ -141,6 +143,7 @@ public class SDK {
 
             String responseJsonStr = response.toString();
             ObjectMapper responseObjectMapper = new ObjectMapper();
+            responseObjectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
             Response<T> responseObject = responseObjectMapper.readValue(responseJsonStr, new TypeReference<Response<T>>() {
             });
 

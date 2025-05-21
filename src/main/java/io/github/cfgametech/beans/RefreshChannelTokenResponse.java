@@ -1,10 +1,12 @@
 package io.github.cfgametech.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * RefreshChannelTokenResponse 是对于 RefreshChannelTokenRequest 的响应数据
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RefreshChannelTokenResponse {
     /**
      * 刷新所得的用户 Token 令牌

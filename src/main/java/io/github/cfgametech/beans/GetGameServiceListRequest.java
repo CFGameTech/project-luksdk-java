@@ -1,7 +1,9 @@
 package io.github.cfgametech.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GetGameServiceListRequest {
     /**
      * 渠道 ID

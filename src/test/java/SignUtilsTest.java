@@ -1,7 +1,5 @@
 import io.github.cfgametech.SDK;
 import io.github.cfgametech.beans.CreateChannelOrderRequest;
-import io.github.cfgametech.beans.GetChannelTokenRequest;
-import io.github.cfgametech.beans.GetChannelUserInfoRequest;
 import io.github.cfgametech.exceptions.Exceptions;
 import org.junit.Test;
 

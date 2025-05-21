@@ -1,9 +1,11 @@
 package io.github.cfgametech.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PublishControlEventRequest {
     public static final int TYPE_JOIN_GAME_EVENT = 1;
     public static final int TYPE_LEAVE_GAME_EVENT = 2;

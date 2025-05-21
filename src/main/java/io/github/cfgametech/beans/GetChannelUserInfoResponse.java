@@ -1,10 +1,12 @@
 package io.github.cfgametech.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * GetChannelUserInfoResponse 是对于 GetChannelUserInfoRequest 的响应数据
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GetChannelUserInfoResponse {
     /**
      * 用户 ID

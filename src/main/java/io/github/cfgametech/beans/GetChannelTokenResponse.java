@@ -1,10 +1,12 @@
 package io.github.cfgametech.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * GetChannelTokenResponse 是对于 GetChannelTokenRequest 的响应数据
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GetChannelTokenResponse {
     /**
      * 置换所得的用户 Token 令牌

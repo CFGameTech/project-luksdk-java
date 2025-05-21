@@ -1,5 +1,6 @@
 package io.github.cfgametech;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.github.cfgametech.exceptions.Exceptions;
 
@@ -7,6 +8,7 @@ import io.github.cfgametech.exceptions.Exceptions;
  * Response 是对于 LUKSDK HTTP 请求的通用响应对象
  * @param <T> 响应的数据类型
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Response<T> {
     /**
      * 响应码

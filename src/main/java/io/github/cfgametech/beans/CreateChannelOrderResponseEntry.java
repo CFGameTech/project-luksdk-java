@@ -1,10 +1,12 @@
 package io.github.cfgametech.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * CreateChannelOrderResponseEntry 是对于 CreateChannelOrderRequest 的响应条目，具体响应应为一个列表，每个条目对应一个 CreateChannelOrderRequest 中的条目。
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateChannelOrderResponseEntry {
     /**
      * 订单创建成功

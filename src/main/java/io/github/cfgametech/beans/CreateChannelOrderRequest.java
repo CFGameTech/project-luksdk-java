@@ -1,5 +1,6 @@
 package io.github.cfgametech.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 /**
  * CreateChannelOrderRequest 类被用于解析来自 LUKSDK 获取创建订单的请求参数。 
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateChannelOrderRequest {
 
     /**

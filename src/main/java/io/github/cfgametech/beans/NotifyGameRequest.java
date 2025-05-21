@@ -1,5 +1,6 @@
 package io.github.cfgametech.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,6 +11,7 @@ import java.util.Map;
 /**
  * NotifyGameRequest 是用于接收来自 LUKSDK 通知游戏状态变更请求参数的数据结构
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NotifyGameRequest {
 
     /**
