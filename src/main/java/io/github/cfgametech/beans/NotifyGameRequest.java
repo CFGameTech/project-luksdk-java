@@ -200,6 +200,7 @@ public class NotifyGameRequest {
     /**
      * 游戏开始前的数据
      */
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class StartBefore {
         /**
          * 房间 ID
@@ -286,6 +287,7 @@ public class NotifyGameRequest {
     /**
      * 游戏进行中的数据
      */
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Gaming {
         /**
          * 房间 ID
@@ -372,6 +374,7 @@ public class NotifyGameRequest {
     /**
      * 游戏结束时的数据
      */
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class End {
         /**
          * 房间 ID

@@ -215,6 +215,7 @@ public class NotifyEventRequest {
         }
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class StartGameEvent {
 
         /**
@@ -294,6 +295,7 @@ public class NotifyEventRequest {
         }
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class EndGameEvent {
 
         @JsonProperty("start_unix_sec")
@@ -507,6 +509,7 @@ public class NotifyEventRequest {
         }
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class RoomUserChangedEvent {
 
         @JsonProperty("user_ids")
@@ -617,6 +620,7 @@ public class NotifyEventRequest {
         }
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class RoomSettingChangedEvent {
 
         @JsonProperty("setting")
@@ -676,6 +680,7 @@ public class NotifyEventRequest {
         }
     }
 
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class RoomSeatSyncEvent {
 
         @JsonProperty("seat_user_ids")
