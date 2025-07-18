@@ -106,6 +106,7 @@ public class NotifyGameRequest {
      * @throws JsonProcessingException 解析异常
      */
     public StartBefore getStartBefore() throws JsonProcessingException {
+        @Deprecated
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(this.data, StartBefore.class);
     }

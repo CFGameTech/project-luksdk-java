@@ -9,6 +9,7 @@ import java.util.List;
  * CreateChannelOrderRequest 类被用于解析来自 LUKSDK 获取创建订单的请求参数。 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Deprecated
 public class CreateChannelOrderRequest {
 
     /**

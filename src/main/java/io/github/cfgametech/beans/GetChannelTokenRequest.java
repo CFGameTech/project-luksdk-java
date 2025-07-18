@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * GetChannelTokenRequest 类被用于解析来自 LUKSDK 通过接入方提供的用户 code 获取用户令牌的请求参数。 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Deprecated
 public class GetChannelTokenRequest {
     /**
      * 用户所属渠道 ID

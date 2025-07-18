@@ -1,5 +1,6 @@
 package io.github.cfgametech.exceptions;
 
+@Deprecated
 public class Exceptions {
     /**
      * 参数有误

@@ -1,8 +1,8 @@
 package io.github.cfgametech;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.cfgametech.luksdk.JacksonConfig;
 import io.github.cfgametech.beans.*;
 import io.github.cfgametech.exceptions.Exceptions;
 import io.github.cfgametech.sign.SignUtils;
@@ -16,6 +16,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+@Deprecated
 public class SDK {
     private final String signSecret;
     private final String domain;
@@ -52,7 +53,7 @@ public class SDK {
         }
 
         String url = domain + apiPrefix + "/get_game_service_list/";
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = JacksonConfig.createObjectMapper();
         if (request.getSign() == null || request.getSign().isEmpty()) {
             request.setSign(generateSignature(request));
         }
@@ -84,8 +85,7 @@ public class SDK {
             }
 
             String responseJsonStr = response.toString();
-            ObjectMapper responseObjectMapper = new ObjectMapper();
-            responseObjectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            ObjectMapper responseObjectMapper = JacksonConfig.createObjectMapper();
             Response<GetGameServiceListResponse> responseObject = responseObjectMapper.readValue(responseJsonStr, new TypeReference<Response<GetGameServiceListResponse>>() {
             });
 
@@ -110,7 +110,7 @@ public class SDK {
         }
 
         String url = domain + apiPrefix + "/publish_control_event/";
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = JacksonConfig.createObjectMapper();
         if (request.getSign() == null || request.getSign().isEmpty()) {
             request.setSign(generateSignature(request));
         }
@@ -142,8 +142,7 @@ public class SDK {
             }
 
             String responseJsonStr = response.toString();
-            ObjectMapper responseObjectMapper = new ObjectMapper();
-            responseObjectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            ObjectMapper responseObjectMapper = JacksonConfig.createObjectMapper();
             Response<T> responseObject = responseObjectMapper.readValue(responseJsonStr, new TypeReference<Response<T>>() {
             });
 

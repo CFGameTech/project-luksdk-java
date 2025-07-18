@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+@Deprecated
 public class SignUtils {
     // 签名方法
     public static String signature(String signSecret, Object params) throws IllegalAccessException {

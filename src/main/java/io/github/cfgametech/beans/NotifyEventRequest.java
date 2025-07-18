@@ -12,6 +12,7 @@ import java.util.Map;
  * 该接口是对于旧版本游戏状态通知（notify_game）接口的替代，提供更统一的数据结构及更多的事件信息。
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Deprecated
 public class NotifyEventRequest {
     public static final int TYPE_START_GAME_EVENT = 1;
     public static final int TYPE_GAME_END_EVENT = 2;

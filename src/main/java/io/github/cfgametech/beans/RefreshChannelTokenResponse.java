@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * RefreshChannelTokenResponse 是对于 RefreshChannelTokenRequest 的响应数据
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Deprecated
 public class RefreshChannelTokenResponse {
     /**
      * 刷新所得的用户 Token 令牌

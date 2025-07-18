@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * RefreshChannelTokenRequest 类被用于解析来自 LUKSDK 刷新用户令牌的请求参数。 
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Deprecated
 public class RefreshChannelTokenRequest {
     /**
      * 用户所属渠道 ID

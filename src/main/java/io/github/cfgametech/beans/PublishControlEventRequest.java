@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Deprecated
 public class PublishControlEventRequest {
     public static final int TYPE_JOIN_GAME_EVENT = 1;
     public static final int TYPE_LEAVE_GAME_EVENT = 2;

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * GetChannelTokenResponse 是对于 GetChannelTokenRequest 的响应数据
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Deprecated
 public class GetChannelTokenResponse {
     /**
      * 置换所得的用户 Token 令牌

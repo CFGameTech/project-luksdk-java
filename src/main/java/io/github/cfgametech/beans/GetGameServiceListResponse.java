@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Deprecated
 public class GetGameServiceListResponse {
     /**
      * 用户 ID

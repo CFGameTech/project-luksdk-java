@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * NotifyChannelOrderResponseEntry 是对于 NotifyChannelOrderRequest 的响应条目，具体响应应为一个列表，每个条目对应一个 NotifyChannelOrderResponseEntry 中的条目。
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Deprecated
 public class NotifyChannelOrderResponseEntry {
     /**
      * 用户 ID

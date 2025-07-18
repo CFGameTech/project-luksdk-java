@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * GetChannelUserInfoResponse 是对于 GetChannelUserInfoRequest 的响应数据
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Deprecated
 public class GetChannelUserInfoResponse {
     /**
      * 用户 ID

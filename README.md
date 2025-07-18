@@ -1,60 +1,25 @@
-# 介绍
-本项目为 Java 版本的 LukSDK，可直接引入使用，其中提供了需接入接口的通用实现，仅需结合业务逻辑将其返回即可。
+# LukSDK for Java
 
-> 仅需将 HTTP 请求转换为对应 Bean 后调用相关函数并填充返回值即可，关于参数的校验等行为交由 SDK 内部处理。
+本项目为 Java 版本的 LukSDK，提供了接入 LukSDK 平台所需的接口封装和数据结构定义。
 
-# Maven
-可通过以下方式引入依赖
+**注意：自动处理签名已不再推荐使用，目前倾向于回调函数仅定义结构体，提供签名函数由开发者执行决定。**
+
+## 主要功能
+
+- **API 接口封装**: 提供标准化的 API 调用接口
+- **控制事件构建器**: 简化控制事件的创建和发布
+- **回调数据结构**: 定义回调接口的请求和响应结构体
+- **类型安全**: 使用 Jackson 进行 JSON 序列化，提供完整的类型定义
+
+## Maven 依赖
 
 ```xml
 <dependency>
     <groupId>io.github.cfgametech</groupId>
     <artifactId>luksdk</artifactId>
-    <version>0.0.5</version>
 </dependency>
 ```
 
-# 示例代码
+## 示例代码
 
-```java
-package org.example;
-
-import io.github.cfgametech.Response;
-import io.github.cfgametech.SDK;
-import io.github.cfgametech.beans.GetChannelTokenRequest;
-import io.github.cfgametech.beans.GetChannelTokenResponse;
-
-public class Main {
-    public static void main(String[] args) throws IllegalAccessException {
-        // 初始化 SDK
-        SDK sdk = new SDK("123465", "https://www.example.com");
-
-        // 来自 SDK 请求的参数结构
-        GetChannelTokenRequest request = new GetChannelTokenRequest();
-
-        request.setChannelId(1000);
-        request.setUserId("userId");
-        request.setTimestamp(167456789);
-        request.setSign(sdk.generateSignature(request));
-
-        // 处理请求
-        Response<GetChannelTokenResponse> resp = sdk.getChannelToken(request, getChannelTokenRequest -> {
-            // 业务逻辑
-            GetChannelTokenResponse response = new GetChannelTokenResponse();
-
-            // 生成 Token
-            response.setToken("token");
-
-            // 设置 Token 过期时间
-            response.setLeftTime(7200);
-
-            return response;
-        });
-
-        // 将 resp 作为 JSON 写入 HTTP 响应
-        System.out.println(resp.getCode());
-        System.out.println(resp.getMessage());
-        System.out.println(resp.getData().getToken());
-    }
-}
-```
+参考示例文件：[SDK 初始化和 API 调用示例](./src/main/java/io/github/cfgametech/luksdk/Example.java)

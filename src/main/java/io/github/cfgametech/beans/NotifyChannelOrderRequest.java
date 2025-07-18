@@ -9,6 +9,7 @@ import java.util.List;
  * NotifyChannelOrderRequest 类被用于解析来自 LUKSDK 下注开奖通知结果的请求参数
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
+@Deprecated
 public class NotifyChannelOrderRequest {
 
     /**

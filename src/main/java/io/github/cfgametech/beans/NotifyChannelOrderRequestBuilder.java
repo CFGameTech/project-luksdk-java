@@ -3,6 +3,7 @@ package io.github.cfgametech.beans;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class NotifyChannelOrderRequestBuilder {
     private final List<NotifyChannelOrderResponseEntry> response;
 
