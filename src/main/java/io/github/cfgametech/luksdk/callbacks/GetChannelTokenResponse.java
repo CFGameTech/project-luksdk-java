@@ -2,10 +2,7 @@ package io.github.cfgametech.luksdk.callbacks;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -16,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class GetChannelTokenResponse {
     @JsonProperty("code")
     private Integer code; // 请求状态码，当值为 0 时表示请求成功
@@ -34,7 +32,8 @@ public class GetChannelTokenResponse {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class Data {
+    @ToString
+    static class Data {
         @JsonProperty("token")
         private String token; // 用户令牌
 

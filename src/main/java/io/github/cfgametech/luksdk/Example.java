@@ -21,7 +21,7 @@ public class Example {
     public static void main(String[] args) throws LukSDKException {
         // 普通请求
         GetGameServiceListResponse response = lukSDK.getApis().getGameServiceList(new GetGameServiceListRequest());
-        System.out.println(response);
+        System.out.println(response.toString());
 
         // 回调请求
         GetChannelTokenRequest request = GetChannelTokenRequest.builder().appId(appId).build();

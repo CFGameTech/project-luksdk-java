@@ -2,10 +2,7 @@ package io.github.cfgametech.luksdk.callbacks;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +15,7 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class NotifyEventRequest {
     @JsonProperty("app_id")
     private Long appId; // App ID
@@ -48,6 +46,7 @@ public class NotifyEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class StartGame {
         @JsonProperty("op_user_id")
         private String opUserId; // 操作用户 ID
@@ -67,6 +66,7 @@ public class NotifyEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class GameOver {
         @JsonProperty("cost_coins")
         private Long costCoins; // 本局消耗货币数
@@ -95,6 +95,9 @@ public class NotifyEventRequest {
         @Data
         @Builder
         @JsonIgnoreProperties(ignoreUnknown = true)
+        @AllArgsConstructor
+        @NoArgsConstructor
+        @ToString
         public static class GameOverUserResult {
             @JsonProperty("escape")
             private Boolean escape; // 是否逃跑
@@ -118,6 +121,7 @@ public class NotifyEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class RoomUserChange {
         @JsonProperty("gaming")
         private Boolean gaming; // 是否游戏进行中
@@ -140,6 +144,7 @@ public class NotifyEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class RoomSettingChange {
         @JsonProperty("op_user_id")
         private String opUserId; // 操作用户 ID
@@ -153,6 +158,7 @@ public class NotifyEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class RoomSeatSync {
         @JsonProperty("seat_user_ids")
         private Map<Integer, String> seatUserIds; // 座位用户 ID 集合
@@ -163,6 +169,7 @@ public class NotifyEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class RoomGameFeature {
         @JsonProperty("feature")
         private String feature; // 游戏特色事件 JSON
@@ -173,6 +180,7 @@ public class NotifyEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class RoomPropEquip {
         @JsonProperty("equipped_prop_id")
         private String equippedPropId; // 装配的道具 ID

@@ -3,7 +3,6 @@ package io.github.cfgametech.luksdk.apimodels;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -15,13 +14,14 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class GetGameServiceListResponse {
     @JsonProperty("code")
     private int code;
     
     @JsonProperty("msg")
     private String msg;
-    
+
     @JsonProperty("data")
     private Data data;
 
@@ -33,9 +33,10 @@ public class GetGameServiceListResponse {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class Data {
         @JsonProperty("game_list")
-        private List<GameListItem> gameList ;
+        private List<Game> gameList ;
     }
 
     /**
@@ -46,7 +47,8 @@ public class GetGameServiceListResponse {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class GameListItem {
+    @ToString
+    public static class Game {
         @JsonProperty("g_id")
         private String gameId;
         

@@ -24,11 +24,6 @@ public class Apis {
      * 获取游戏服务列表
      */
     public GetGameServiceListResponse getGameServiceList(GetGameServiceListRequest request) throws LukSDKException {
-        // 生成签名
-        request.setSign(Optional.
-                ofNullable(request.getSign()).
-                orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
-
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
             request.setAppId(lukSDK.getConfig().getAppId());
@@ -38,6 +33,11 @@ public class Apis {
         request.setTimestamp(Optional.
                 ofNullable(request.getTimestamp()).
                 orElse(System.currentTimeMillis() / 1000));
+
+        // 生成签名
+        request.setSign(Optional.
+                ofNullable(request.getSign()).
+                orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
 
         return makeRequest("/sdk/get_game_service_list", request, GetGameServiceListResponse.class);
     }
@@ -46,11 +46,6 @@ public class Apis {
      * 查询通知事件
      */
     public QueryNotifyEventResponse queryNotifyEvent(QueryNotifyEventRequest request) throws LukSDKException {
-        // 生成签名
-        request.setSign(Optional.
-                ofNullable(request.getSign()).
-                orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
-
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
             request.setAppId(lukSDK.getConfig().getAppId());
@@ -60,6 +55,12 @@ public class Apis {
         request.setTimestamp(Optional.
                 ofNullable(request.getTimestamp()).
                 orElse(System.currentTimeMillis() / 1000));
+
+        // 生成签名
+        request.setSign(Optional.
+                ofNullable(request.getSign()).
+                orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
+
 
         return makeRequest("/sdk/query_notify_event", request, QueryNotifyEventResponse.class);
     }
@@ -68,11 +69,6 @@ public class Apis {
      * 查询订单
      */
     public QueryOrderResponse queryOrder(QueryOrderRequest request) throws LukSDKException {
-        // 生成签名
-        request.setSign(Optional.
-                ofNullable(request.getSign()).
-                orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
-
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
             request.setAppId(lukSDK.getConfig().getAppId());
@@ -82,6 +78,12 @@ public class Apis {
         request.setTimestamp(Optional.
                 ofNullable(request.getTimestamp()).
                 orElse(System.currentTimeMillis() / 1000));
+
+        // 生成签名
+        request.setSign(Optional.
+                ofNullable(request.getSign()).
+                orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
+
 
         return makeRequest("/sdk/query_order", request, QueryOrderResponse.class);
     }
@@ -90,11 +92,6 @@ public class Apis {
      * 发布控制事件
      */
     public PublishControlEventResponse publishControlEvent(PublishControlEventRequest request) throws LukSDKException {
-        // 生成签名
-        request.setSign(Optional.
-                ofNullable(request.getSign()).
-                orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
-
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
             request.setAppId(lukSDK.getConfig().getAppId());
@@ -104,6 +101,12 @@ public class Apis {
         request.setTimestamp(Optional.
                 ofNullable(request.getTimestamp()).
                 orElse(System.currentTimeMillis() / 1000));
+
+        // 生成签名
+        request.setSign(Optional.
+                ofNullable(request.getSign()).
+                orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
+
 
         return makeRequest("/sdk/publish_control_event", request, PublishControlEventResponse.class);
     }

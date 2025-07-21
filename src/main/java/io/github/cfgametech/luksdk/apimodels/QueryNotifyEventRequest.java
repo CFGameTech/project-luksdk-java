@@ -13,6 +13,7 @@ import lombok.*;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class QueryNotifyEventRequest {
     @JsonProperty("app_id")
     private Long appId;

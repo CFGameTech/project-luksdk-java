@@ -2,10 +2,7 @@ package io.github.cfgametech.luksdk.callbacks;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +15,7 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class NotifyGameRequest {
     @JsonProperty("c_id")
     private Long appId; // App ID
@@ -45,6 +43,7 @@ public class NotifyGameRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class GameStartBeforeData {
         @JsonProperty("game_setting")
         private String gameSetting; // 游戏当前设置
@@ -67,6 +66,7 @@ public class NotifyGameRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class GameRunningData {
         @JsonProperty("notify_action")
         private Long notifyAction; // 操作
@@ -89,6 +89,7 @@ public class NotifyGameRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class GameEndData {
         @JsonProperty("is_force_end")
         private Boolean isForceEnd; // 是否强制结束游戏

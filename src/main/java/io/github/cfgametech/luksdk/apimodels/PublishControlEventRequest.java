@@ -15,6 +15,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class PublishControlEventRequest {
     @JsonProperty("app_id")
     private Long appId;
@@ -37,7 +38,7 @@ public class PublishControlEventRequest {
     private Long timestamp;
 
     @JsonProperty("sign")
-    private String sign = "";
+    private String sign;
 
     public interface ControlEvent {
     }
@@ -47,6 +48,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class JoinGame implements ControlEvent {
         @NonNull
         @JsonProperty("user_id")
@@ -67,6 +69,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class LeaveGame implements ControlEvent {
         @NonNull
         @JsonProperty("user_id")
@@ -78,6 +81,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class ChangeReadyStatus implements ControlEvent {
         @NonNull
         @JsonProperty("user_id")
@@ -92,6 +96,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class KickPlayer implements ControlEvent {
         @JsonProperty("op_user_id")
         private String opUserId;
@@ -109,6 +114,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class StartGame implements ControlEvent {
 
         @JsonProperty("op_user_id")
@@ -126,6 +132,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class ForceCloseGame implements ControlEvent {
         @JsonProperty("op_user_id")
         private String opUserId;
@@ -139,6 +146,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class ChangeRoomSetting implements ControlEvent {
         @JsonProperty("op_user_id")
         private String opUserId;
@@ -153,6 +161,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class ChangeUserIdentity implements ControlEvent {
         @NonNull
         @JsonProperty("user_id")
@@ -166,6 +175,7 @@ public class PublishControlEventRequest {
     @Builder
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
+    @ToString
     public static class RoomSeatSync implements ControlEvent {
 
     }
@@ -175,6 +185,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class RefreshUserInfo implements ControlEvent {
         @NonNull
         @JsonProperty("user_id")
@@ -186,6 +197,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class QuickStartGame implements ControlEvent {
         @JsonProperty("setting")
         private String setting;
@@ -202,6 +214,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class IssueProps implements ControlEvent {
         @NonNull
         @JsonProperty("unique_id")
@@ -222,6 +235,7 @@ public class PublishControlEventRequest {
         @JsonIgnoreProperties(ignoreUnknown = true)
         @AllArgsConstructor
         @NoArgsConstructor
+        @ToString
         public static class Detail {
             @NonNull
             @JsonProperty("prop_id")
@@ -244,6 +258,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class FetchBagStatus implements ControlEvent {
         @NonNull
         @JsonProperty("user_id")
@@ -255,6 +270,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class QueryIssuePropStatus implements ControlEvent {
         @NonNull
         @JsonProperty("unique_id")
@@ -266,6 +282,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class EquippedProp implements ControlEvent {
         @NonNull
         @JsonProperty("user_id")
@@ -281,6 +298,7 @@ public class PublishControlEventRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class UnequippedProp implements ControlEvent {
         @NonNull
         @JsonProperty("user_id")

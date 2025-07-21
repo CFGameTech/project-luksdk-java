@@ -2,10 +2,7 @@ package io.github.cfgametech.luksdk.callbacks;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -16,9 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class NotifyChannelOrderResponse {
     @JsonProperty("code")
-    private Integer code = 0; // 请求状态码，当值为 0 时表示请求成功
+    private Integer code; // 请求状态码，当值为 0 时表示请求成功
     
     @JsonProperty("msg")
     private String msg; // 请求状态说明
@@ -31,6 +29,7 @@ public class NotifyChannelOrderResponse {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class Data {
         @JsonProperty("c_uid")
         private String userId;

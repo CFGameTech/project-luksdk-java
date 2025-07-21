@@ -2,10 +2,7 @@ package io.github.cfgametech.luksdk.callbacks;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -18,6 +15,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class NotifyChannelOrderRequest {
     @JsonProperty("data")
     private List<Order> data;
@@ -39,6 +37,7 @@ public class NotifyChannelOrderRequest {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class Order {
         @JsonProperty("c_id")
         private Long appId;

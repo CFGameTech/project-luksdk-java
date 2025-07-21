@@ -2,10 +2,7 @@ package io.github.cfgametech.luksdk.apimodels;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -16,7 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class QueryOrderResponse {
+public@ToString
+class QueryOrderResponse {
     @JsonProperty("code")
     private int code;
 
@@ -34,6 +32,7 @@ public class QueryOrderResponse {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class Data {
         @JsonProperty("app_id")
         private long appId;

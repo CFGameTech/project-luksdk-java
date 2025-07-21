@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class RefreshChannelTokenResponse {
     @JsonProperty("code")
     private int code; // 请求状态码，当值为 0 时表示请求成功
@@ -31,6 +32,7 @@ public class RefreshChannelTokenResponse {
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class Data {
         @JsonProperty("token")
         private String token; // 新的令牌
