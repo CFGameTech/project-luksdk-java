@@ -115,6 +115,15 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- exec-maven-plugin -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <mainClass>io.github.cfgametech.luksdk.Example</mainClass>
+                </configuration>
+            </plugin>
             <!-- gpg插件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

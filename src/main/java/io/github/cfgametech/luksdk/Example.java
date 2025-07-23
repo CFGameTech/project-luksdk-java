@@ -1,5 +1,6 @@
 package io.github.cfgametech.luksdk;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.cfgametech.luksdk.apimodels.*;
 import io.github.cfgametech.luksdk.callbacks.*;
 import okhttp3.OkHttpClient;
@@ -18,7 +19,7 @@ public class Example {
             httpClient(new OkHttpClient()).
             build());
 
-    public static void main(String[] args) throws LukSDKException {
+    public static void main(String[] args) throws LukSDKException, JsonProcessingException {
         // 普通请求
         GetGameServiceListResponse response = lukSDK.getApis().getGameServiceList(new GetGameServiceListRequest());
         System.out.println(response.toString());
@@ -31,5 +32,18 @@ public class Example {
         if (!SignatureUtils.signature(appSecret, request).equals(request.getSign())) {
             throw LukSDKExceptions.SIGN_ERROR;
         }
+
+        // 控制事件请求
+        PublishControlEventRequest fetchBagStatusRequest = PublishControlEventRequest.builder().
+                appId(appId).
+                gameId(0L).
+                type(1001).
+                data(JacksonConfig.createObjectMapper().writeValueAsString(PublishControlEventRequest.FetchBagStatus.builder().
+                        userId("EXAMPLE").
+                        build())).
+                build();
+        PublishControlEventResponse<PublishControlEventResponse.FetchBagStatusResponse> publishControlEventResponse = lukSDK.getApis().
+                publishControlEvent(fetchBagStatusRequest, PublishControlEventResponse.FetchBagStatusResponse.class);
+        System.out.println(publishControlEventResponse.toString());
     }
 }

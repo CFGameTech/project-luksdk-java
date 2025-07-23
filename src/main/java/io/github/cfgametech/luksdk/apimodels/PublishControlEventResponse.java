@@ -2,8 +2,9 @@ package io.github.cfgametech.luksdk.apimodels;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -27,6 +28,13 @@ public class PublishControlEventResponse<T extends PublishControlEventResponse.C
     private T data;
 
     public interface ControlEventResponse { }
+
+    @Builder
+    @Data
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    @AllArgsConstructor
+    @ToString
+    public static class Empty implements ControlEventResponse {}
 
     @Builder
     @Data

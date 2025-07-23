@@ -1,10 +1,15 @@
 package io.github.cfgametech.luksdk;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cfgametech.luksdk.apimodels.*;
 import okhttp3.*;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -23,7 +28,7 @@ public class Apis {
     /**
      * 获取游戏服务列表
      */
-    public GetGameServiceListResponse getGameServiceList(GetGameServiceListRequest request) throws LukSDKException {
+    public GetGameServiceListResponse getGameServiceList(GetGameServiceListRequest request) throws LukSDKException, JsonProcessingException {
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
             request.setAppId(lukSDK.getConfig().getAppId());
@@ -39,13 +44,14 @@ public class Apis {
                 ofNullable(request.getSign()).
                 orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
 
-        return makeRequest("/sdk/get_game_service_list", request, GetGameServiceListResponse.class);
+        String json = makeRequest("/sdk/get_game_service_list", request);
+        return objectMapper.readValue(json, GetGameServiceListResponse.class);
     }
 
     /**
      * 查询通知事件
      */
-    public QueryNotifyEventResponse queryNotifyEvent(QueryNotifyEventRequest request) throws LukSDKException {
+    public QueryNotifyEventResponse queryNotifyEvent(QueryNotifyEventRequest request) throws LukSDKException, JsonProcessingException {
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
             request.setAppId(lukSDK.getConfig().getAppId());
@@ -62,13 +68,14 @@ public class Apis {
                 orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
 
 
-        return makeRequest("/sdk/query_notify_event", request, QueryNotifyEventResponse.class);
+        String json = makeRequest("/sdk/query_notify_event", request);
+        return objectMapper.readValue(json, QueryNotifyEventResponse.class);
     }
 
     /**
      * 查询订单
      */
-    public QueryOrderResponse queryOrder(QueryOrderRequest request) throws LukSDKException {
+    public QueryOrderResponse queryOrder(QueryOrderRequest request) throws LukSDKException, JsonProcessingException {
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
             request.setAppId(lukSDK.getConfig().getAppId());
@@ -85,13 +92,14 @@ public class Apis {
                 orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
 
 
-        return makeRequest("/sdk/query_order", request, QueryOrderResponse.class);
+        String json = makeRequest("/sdk/query_order", request);
+        return objectMapper.readValue(json, QueryOrderResponse.class);
     }
 
     /**
      * 发布控制事件
      */
-    public PublishControlEventResponse publishControlEvent(PublishControlEventRequest request) throws LukSDKException {
+    public <T extends PublishControlEventResponse.ControlEventResponse> PublishControlEventResponse<T> publishControlEvent(PublishControlEventRequest request, Class<T> dataClass) throws LukSDKException, JsonProcessingException {
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
             request.setAppId(lukSDK.getConfig().getAppId());
@@ -107,14 +115,16 @@ public class Apis {
                 ofNullable(request.getSign()).
                 orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
 
+        String json = makeRequest("/sdk/publish_control_event", request);
 
-        return makeRequest("/sdk/publish_control_event", request, PublishControlEventResponse.class);
+        JavaType type = objectMapper.getTypeFactory().constructParametricType(PublishControlEventResponse.class, dataClass);
+        return objectMapper.readValue(json, type);
     }
 
     /**
      * 发送 POST 请求
      */
-    private <T> T makeRequest(String endpoint, Object requestBody, Class<T> responseClass) throws LukSDKException {
+    private <T> String makeRequest(String endpoint, Object requestBody) throws LukSDKException {
         try {
             // 序列化请求体
             String jsonBody = objectMapper.writeValueAsString(requestBody);
@@ -139,10 +149,7 @@ public class Apis {
                     throw LukSDKExceptions.INTERNAL_ERROR.with("Empty response body");
                 }
 
-                String responseJson = responseBody.string();
-
-                // 反序列化响应
-                return objectMapper.readValue(responseJson, responseClass);
+                return responseBody.string();
             }
         } catch (IOException e) {
             throw LukSDKExceptions.INTERNAL_ERROR.with("Request failed: " + e.getMessage());
