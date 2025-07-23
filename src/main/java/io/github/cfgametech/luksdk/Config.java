@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import okhttp3.OkHttpClient;
 
 /**
  * SDK 配置类
@@ -19,6 +18,4 @@ public class Config {
     private final String appSecret;
     @NonNull
     private final String domain;
-    @NonNull
-    private final OkHttpClient httpClient;
 }

@@ -3,7 +3,6 @@ package io.github.cfgametech.luksdk;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.cfgametech.luksdk.apimodels.*;
 import io.github.cfgametech.luksdk.callbacks.*;
-import okhttp3.OkHttpClient;
 
 /**
  * LukSDK Java 使用示例
@@ -16,7 +15,6 @@ public class Example {
             appId(appId).
             appSecret(appSecret).
             domain(domain).
-            httpClient(new OkHttpClient()).
             build());
 
     public static void main(String[] args) throws LukSDKException, JsonProcessingException {

@@ -1,15 +1,17 @@
 package io.github.cfgametech.luksdk;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cfgametech.luksdk.apimodels.*;
-import okhttp3.*;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Map;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 /**
@@ -18,7 +20,6 @@ import java.util.Optional;
 public class Apis {
     private final LukSDK lukSDK;
     private final ObjectMapper objectMapper;
-    private static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
     public Apis(LukSDK lukSDK) {
         this.lukSDK = lukSDK;
@@ -126,30 +127,22 @@ public class Apis {
      */
     private <T> String makeRequest(String endpoint, Object requestBody) throws LukSDKException {
         try {
-            // 序列化请求体
             String jsonBody = objectMapper.writeValueAsString(requestBody);
 
-            // 构建请求
-            RequestBody body = RequestBody.create(jsonBody, JSON);
-            Request request = new Request.Builder()
-                    .url(lukSDK.getConfig().getDomain() + endpoint)
-                    .post(body)
-                    .addHeader("Content-Type", "application/json")
-                    .addHeader("User-Agent", "java/v1.0.0")
-                    .build();
+            HttpURLConnection conn = getHttpURLConnection(endpoint, jsonBody);
 
-            // 发送请求
-            try (Response response = lukSDK.getConfig().getHttpClient().newCall(request).execute()) {
-                if (!response.isSuccessful()) {
-                    throw LukSDKExceptions.INTERNAL_ERROR.with("HTTP error: " + response.code());
+            int responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+                while ((inputLine = br.readLine()) != null) {
+                    response.append(inputLine);
                 }
 
-                ResponseBody responseBody = response.body();
-                if (responseBody == null) {
-                    throw LukSDKExceptions.INTERNAL_ERROR.with("Empty response body");
-                }
-
-                return responseBody.string();
+                return response.toString();
+            } else {
+                throw LukSDKExceptions.INTERNAL_ERROR.with("HTTP error: " + responseCode);
             }
         } catch (IOException e) {
             throw LukSDKExceptions.INTERNAL_ERROR.with("Request failed: " + e.getMessage());
@@ -159,5 +152,20 @@ public class Apis {
             }
             throw LukSDKExceptions.INTERNAL_ERROR.with("Unexpected error: " + e.getMessage());
         }
+    }
+
+    private HttpURLConnection getHttpURLConnection(String endpoint, String jsonBody) throws IOException {
+        URL url = new URL(lukSDK.getConfig().getDomain() + endpoint);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type", "application/json");
+        conn.setRequestProperty("User-Agent", "java/v1.0.3");
+        conn.setDoOutput(true);
+
+        try (OutputStream os = conn.getOutputStream()) {
+            byte[] input = jsonBody.getBytes(StandardCharsets.UTF_8);
+            os.write(input, 0, input.length);
+        }
+        return conn;
     }
 }
