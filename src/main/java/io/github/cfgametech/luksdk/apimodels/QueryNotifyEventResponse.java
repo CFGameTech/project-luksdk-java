@@ -3,7 +3,6 @@ package io.github.cfgametech.luksdk.apimodels;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -18,24 +17,24 @@ import java.util.List;
 @ToString
 public class QueryNotifyEventResponse {
     @JsonProperty("code")
-    private int code;
+    private Integer code;
     
     @JsonProperty("msg")
     private String msg;
     
     @JsonProperty("data")
-    private Data data;
+    private ResponseData data;
 
     /**
      * 响应数据
      */
     @Builder
-    @lombok.Data
+    @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
     @ToString
-    public static class Data {
+    public static class ResponseData {
         @JsonProperty("list")
         private List<Event> list;
 
@@ -43,7 +42,7 @@ public class QueryNotifyEventResponse {
          * 事件信息
          */
         @Builder
-        @lombok.Data
+        @Data
         @JsonIgnoreProperties(ignoreUnknown = true)
         @AllArgsConstructor
         @NoArgsConstructor

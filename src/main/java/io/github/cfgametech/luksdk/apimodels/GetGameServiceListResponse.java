@@ -17,24 +17,24 @@ import java.util.List;
 @ToString
 public class GetGameServiceListResponse {
     @JsonProperty("code")
-    private int code;
+    private Integer code;
     
     @JsonProperty("msg")
     private String msg;
 
     @JsonProperty("data")
-    private Data data;
+    private ResponseData data;
 
     /**
      * 响应数据
      */
     @Builder
-    @lombok.Data
+    @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
     @ToString
-    public static class Data {
+    public static class ResponseData {
         @JsonProperty("game_list")
         private List<Game> gameList ;
     }
@@ -43,7 +43,7 @@ public class GetGameServiceListResponse {
      * 游戏信息
      */
     @Builder
-    @lombok.Data
+    @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor

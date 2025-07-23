@@ -15,7 +15,7 @@ public class Response<T> {
      * 响应码
      */
     @JsonProperty("code")
-    private int code;
+    private Integer code;
 
     /**
      * 响应消息

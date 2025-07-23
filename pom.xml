@@ -6,7 +6,7 @@
 
     <groupId>io.github.cfgametech</groupId>
     <artifactId>luksdk</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 
     <name>luksdk</name>
     <description>LUKSDK 是面向 LUKSDK 后台接入的 SDK 集成，用于帮助开发者快速接入 LUKSDK。</description>
@@ -41,7 +41,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.38</version>
-            <scope>provided</scope>
         </dependency>
 
         <!-- OkHttp for HTTP client -->

@@ -3,7 +3,6 @@ package io.github.cfgametech.luksdk.callbacks;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 通知渠道订单响应
@@ -16,21 +15,21 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 public class NotifyChannelOrderResponse {
     @JsonProperty("code")
-    private Integer code; // 请求状态码，当值为 0 时表示请求成功
+    private Integer code;
     
     @JsonProperty("msg")
-    private String msg; // 请求状态说明
+    private String msg;
 
     @JsonProperty("data")
-    private Data data; // 请求状态说明
+    private ResponseData data;
 
     @Builder
-    @lombok.Data
+    @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
     @ToString
-    public static class Data {
+    public static class ResponseData {
         @JsonProperty("c_uid")
         private String userId;
 

@@ -3,7 +3,6 @@ package io.github.cfgametech.luksdk.callbacks;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 获取渠道用户信息响应
@@ -22,18 +21,18 @@ public class GetChannelUserInfoResponse {
     private String msg; // 请求状态说明
     
     @JsonProperty("data")
-    private Data data; // 响应数据
+    private ResponseData data; // 响应数据
 
     /**
      * 响应数据
      */
     @Builder
-    @lombok.Data
+    @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
     @ToString
-    public static class Data {
+    public static class ResponseData {
         @JsonProperty("nickname")
         private String nickname; // 用户昵称
         

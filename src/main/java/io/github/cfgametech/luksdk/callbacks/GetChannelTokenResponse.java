@@ -3,7 +3,6 @@ package io.github.cfgametech.luksdk.callbacks;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * 获取渠道令牌响应
@@ -22,18 +21,18 @@ public class GetChannelTokenResponse {
     private String msg; // 请求状态说明
     
     @JsonProperty("data")
-    private Data data;
+    private ResponseData data;
 
     /**
      * 响应数据
      */
     @Builder
-    @lombok.Data
+    @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
     @AllArgsConstructor
     @NoArgsConstructor
     @ToString
-    static class Data {
+    static class ResponseData {
         @JsonProperty("token")
         private String token; // 用户令牌
 
