@@ -6,7 +6,7 @@
 
     <groupId>io.github.cfgametech</groupId>
     <artifactId>luksdk</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 
     <name>luksdk</name>
     <description>LUKSDK 是面向 LUKSDK 后台接入的 SDK 集成，用于帮助开发者快速接入 LUKSDK。</description>
@@ -114,15 +114,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <!-- exec-maven-plugin -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <mainClass>io.github.cfgametech.luksdk.Example</mainClass>
-                </configuration>
             </plugin>
             <!-- gpg插件 -->
             <plugin>
