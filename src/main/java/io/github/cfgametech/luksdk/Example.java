@@ -12,9 +12,9 @@ public class Example {
     private static final String appSecret = System.getenv("TEST_APP_SECRET");
     private static final String domain = System.getenv("TEST_DOMAIN");
     private static final LukSDK lukSDK = new LukSDK(Config.builder().
-            appId(appId).
-            appSecret(appSecret).
-            domain(domain).
+            appId(1045111L).
+            appSecret("55428f6455ef4b1810c9ecb8be6a").
+            domain("https://pre.luk.live").
             build());
 
     public static void main(String[] args) throws LukSDKException, JsonProcessingException {
@@ -33,15 +33,20 @@ public class Example {
 
         // 控制事件请求
         PublishControlEventRequest fetchBagStatusRequest = PublishControlEventRequest.builder().
-                appId(appId).
-                gameId(0L).
+                appId(1045111L).
+                gameId(102L).
                 type(1001).
                 data(JacksonConfig.createObjectMapper().writeValueAsString(PublishControlEventRequest.FetchBagStatus.builder().
-                        userId("EXAMPLE").
+                        userId("1355432380151733890").
                         build())).
                 build();
         PublishControlEventResponse<PublishControlEventResponse.FetchBagStatusResponse> publishControlEventResponse = lukSDK.getApis().
                 publishControlEvent(fetchBagStatusRequest, PublishControlEventResponse.FetchBagStatusResponse.class);
-        System.out.println(publishControlEventResponse.toString());
+
+        System.out.println(publishControlEventResponse.getCode());
+        System.out.println(publishControlEventResponse.getMsg());
+        publishControlEventResponse.getData().getPropList().forEach(prop -> {
+            System.out.println(prop.toString());
+        });
     }
 }

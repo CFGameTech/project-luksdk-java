@@ -33,8 +33,11 @@ public class GetChannelUserInfoResponse {
     @NoArgsConstructor
     @ToString
     public static class ResponseData {
-        @JsonProperty("nickname")
-        private String nickname; // 用户昵称
+        @JsonProperty("c_uid")
+        private String userId; // 渠道用户 ID
+        
+        @JsonProperty("name")
+        private String name; // 用户昵称
         
         @JsonProperty("avatar")
         private String avatar; // 用户头像
