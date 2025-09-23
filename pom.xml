@@ -114,7 +114,7 @@
                 <version>3.2.5</version>
                 <configuration>
                     <!-- 改成你自己的路径 -->
-                    <executable>D:\application\GnuPG\bin\gpg.exe</executable>
+                    <executable>C:\Scoop\apps\gpg\current\bin\gpg.exe</executable>
                 </configuration>
                 <executions>
                     <execution>
