@@ -29,7 +29,9 @@ public class Response<T> {
     @JsonProperty("data")
     private T data;
 
-    public Response() {}
+    public Response() {
+        this.code = 0;
+    }
 
     public int getCode() {
         return code;

@@ -2,7 +2,6 @@ package io.github.cfgametech.luksdk.apimodels;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.github.cfgametech.luksdk.Enums;
 import lombok.*;
 
 import java.util.List;
@@ -169,7 +168,7 @@ public class PublishControlEventRequest {
 
         @NonNull
         @JsonProperty("identity")
-        private Enums.Identity identity; // 需定义 Identity 类
+        private Integer identity; // 需定义 Identity 类
     }
 
     @Builder
