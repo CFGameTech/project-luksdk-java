@@ -32,7 +32,7 @@ public class GetChannelTokenResponse {
     @AllArgsConstructor
     @NoArgsConstructor
     @ToString
-    static class ResponseData {
+    public static class ResponseData {
         @JsonProperty("token")
         private String token; // 用户令牌
 
