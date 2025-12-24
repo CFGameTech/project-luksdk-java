@@ -90,7 +90,7 @@ public class NotifyEventRequest {
         private Long startUnixSec; // 游戏开始时间，秒级时间戳
 
         @JsonProperty("user_results")
-        private List<GameOverUserResult> userResults; // 玩家游戏结果
+        private Map<String, GameOverUserResult> userResults; // 玩家游戏结果
 
         @Data
         @Builder
