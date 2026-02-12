@@ -2,6 +2,7 @@ package io.github.cfgametech.luksdk;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cfgametech.luksdk.apimodels.*;
 
@@ -29,21 +30,19 @@ public class Apis {
     /**
      * 获取游戏服务列表
      */
-    public GetGameServiceListResponse getGameServiceList(GetGameServiceListRequest request) throws LukSDKException, JsonProcessingException {
+    public GetGameServiceListResponse getGameServiceList(GetGameServiceListRequest request)
+            throws LukSDKException, JsonProcessingException {
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
             request.setAppId(lukSDK.getConfig().getAppId());
         }
 
         // 如果时间戳没有
-        request.setTimestamp(Optional.
-                ofNullable(request.getTimestamp()).
-                orElse(System.currentTimeMillis() / 1000));
+        request.setTimestamp(Optional.ofNullable(request.getTimestamp()).orElse(System.currentTimeMillis() / 1000));
 
         // 生成签名
-        request.setSign(Optional.
-                ofNullable(request.getSign()).
-                orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
+        request.setSign(Optional.ofNullable(request.getSign())
+                .orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
 
         String json = makeRequest("/sdk/get_game_service_list", request);
         return objectMapper.readValue(json, GetGameServiceListResponse.class);
@@ -52,22 +51,19 @@ public class Apis {
     /**
      * 查询通知事件
      */
-    public QueryNotifyEventResponse queryNotifyEvent(QueryNotifyEventRequest request) throws LukSDKException, JsonProcessingException {
+    public QueryNotifyEventResponse queryNotifyEvent(QueryNotifyEventRequest request)
+            throws LukSDKException, JsonProcessingException {
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
             request.setAppId(lukSDK.getConfig().getAppId());
         }
 
         // 如果时间戳没有
-        request.setTimestamp(Optional.
-                ofNullable(request.getTimestamp()).
-                orElse(System.currentTimeMillis() / 1000));
+        request.setTimestamp(Optional.ofNullable(request.getTimestamp()).orElse(System.currentTimeMillis() / 1000));
 
         // 生成签名
-        request.setSign(Optional.
-                ofNullable(request.getSign()).
-                orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
-
+        request.setSign(Optional.ofNullable(request.getSign())
+                .orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
 
         String json = makeRequest("/sdk/query_notify_event", request);
         return objectMapper.readValue(json, QueryNotifyEventResponse.class);
@@ -83,15 +79,11 @@ public class Apis {
         }
 
         // 如果时间戳没有
-        request.setTimestamp(Optional.
-                ofNullable(request.getTimestamp()).
-                orElse(System.currentTimeMillis() / 1000));
+        request.setTimestamp(Optional.ofNullable(request.getTimestamp()).orElse(System.currentTimeMillis() / 1000));
 
         // 生成签名
-        request.setSign(Optional.
-                ofNullable(request.getSign()).
-                orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
-
+        request.setSign(Optional.ofNullable(request.getSign())
+                .orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
 
         String json = makeRequest("/sdk/query_order", request);
         return objectMapper.readValue(json, QueryOrderResponse.class);
@@ -100,25 +92,36 @@ public class Apis {
     /**
      * 发布控制事件
      */
-    public <T extends PublishControlEventResponse.ControlEventResponse> PublishControlEventResponse<T> publishControlEvent(PublishControlEventRequest request, Class<T> dataClass) throws LukSDKException, JsonProcessingException {
+    public <T extends PublishControlEventResponse.ControlEventResponse> PublishControlEventResponse<T> publishControlEvent(
+            PublishControlEventRequest request, Class<T> dataClass) throws LukSDKException, JsonProcessingException {
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
             request.setAppId(lukSDK.getConfig().getAppId());
         }
 
         // 如果时间戳没有
-        request.setTimestamp(Optional.
-                ofNullable(request.getTimestamp()).
-                orElse(System.currentTimeMillis() / 1000));
+        request.setTimestamp(Optional.ofNullable(request.getTimestamp()).orElse(System.currentTimeMillis() / 1000));
 
         // 生成签名
-        request.setSign(Optional.
-                ofNullable(request.getSign()).
-                orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
+        request.setSign(Optional.ofNullable(request.getSign())
+                .orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
 
         String json = makeRequest("/sdk/publish_control_event", request);
 
-        JavaType type = objectMapper.getTypeFactory().constructParametricType(PublishControlEventResponse.class, dataClass);
+        if (dataClass == PublishControlEventResponse.Empty.class || dataClass == null) {
+            // 仅处理 code 和 msg，不解析 data
+            JsonNode root = objectMapper.readTree(json);
+            Integer code = root.has("code") && !root.get("code").isNull() ? root.get("code").asInt() : null;
+            String msg = root.has("msg") && !root.get("msg").isNull() ? root.get("msg").asText() : null;
+            PublishControlEventResponse<T> onlyCodeMsg = PublishControlEventResponse.<T>builder()
+                    .code(code)
+                    .msg(msg)
+                    .build();
+            return onlyCodeMsg;
+        }
+
+        JavaType type = objectMapper.getTypeFactory().constructParametricType(PublishControlEventResponse.class,
+                dataClass);
         return objectMapper.readValue(json, type);
     }
 
