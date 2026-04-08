@@ -19,6 +19,8 @@ import java.util.Optional;
  * API 调用类
  */
 public class Apis {
+    private static final String DEFAULT_USER_AGENT = "java/v1.0.10";
+
     private final LukSDK lukSDK;
     private final ObjectMapper objectMapper;
 
@@ -32,26 +34,13 @@ public class Apis {
      */
     public GetGameServiceListResponse getGameServiceList(GetGameServiceListRequest request)
             throws LukSDKException, JsonProcessingException {
-        // 如果 AppId 为 0，使用配置的
-        if (request.getAppId() == null || request.getAppId() == 0) {
-            request.setAppId(lukSDK.getConfig().getAppId());
-        }
-
-        // 如果时间戳没有
-        request.setTimestamp(Optional.ofNullable(request.getTimestamp()).orElse(System.currentTimeMillis() / 1000));
-
-        // 生成签名
-        request.setSign(Optional.ofNullable(request.getSign())
-                .orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
-
-        String json = makeRequest("/sdk/get_game_service_list", request);
-        return objectMapper.readValue(json, GetGameServiceListResponse.class);
+        return getGameServiceList(request, null);
     }
 
     /**
-     * 查询通知事件
+     * 获取游戏服务列表，可指定本次调用的超时。
      */
-    public QueryNotifyEventResponse queryNotifyEvent(QueryNotifyEventRequest request)
+    public GetGameServiceListResponse getGameServiceList(GetGameServiceListRequest request, HttpCallOptions httpCallOptions)
             throws LukSDKException, JsonProcessingException {
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
@@ -65,14 +54,23 @@ public class Apis {
         request.setSign(Optional.ofNullable(request.getSign())
                 .orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
 
-        String json = makeRequest("/sdk/query_notify_event", request);
-        return objectMapper.readValue(json, QueryNotifyEventResponse.class);
+        String json = makeRequest("/sdk/get_game_service_list", request, httpCallOptions);
+        return objectMapper.readValue(json, GetGameServiceListResponse.class);
     }
 
     /**
-     * 查询订单
+     * 查询通知事件
      */
-    public QueryOrderResponse queryOrder(QueryOrderRequest request) throws LukSDKException, JsonProcessingException {
+    public QueryNotifyEventResponse queryNotifyEvent(QueryNotifyEventRequest request)
+            throws LukSDKException, JsonProcessingException {
+        return queryNotifyEvent(request, null);
+    }
+
+    /**
+     * 查询通知事件，可指定本次调用的超时。
+     */
+    public QueryNotifyEventResponse queryNotifyEvent(QueryNotifyEventRequest request, HttpCallOptions httpCallOptions)
+            throws LukSDKException, JsonProcessingException {
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
             request.setAppId(lukSDK.getConfig().getAppId());
@@ -85,7 +83,35 @@ public class Apis {
         request.setSign(Optional.ofNullable(request.getSign())
                 .orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
 
-        String json = makeRequest("/sdk/query_order", request);
+        String json = makeRequest("/sdk/query_notify_event", request, httpCallOptions);
+        return objectMapper.readValue(json, QueryNotifyEventResponse.class);
+    }
+
+    /**
+     * 查询订单
+     */
+    public QueryOrderResponse queryOrder(QueryOrderRequest request) throws LukSDKException, JsonProcessingException {
+        return queryOrder(request, null);
+    }
+
+    /**
+     * 查询订单，可指定本次调用的超时。
+     */
+    public QueryOrderResponse queryOrder(QueryOrderRequest request, HttpCallOptions httpCallOptions)
+            throws LukSDKException, JsonProcessingException {
+        // 如果 AppId 为 0，使用配置的
+        if (request.getAppId() == null || request.getAppId() == 0) {
+            request.setAppId(lukSDK.getConfig().getAppId());
+        }
+
+        // 如果时间戳没有
+        request.setTimestamp(Optional.ofNullable(request.getTimestamp()).orElse(System.currentTimeMillis() / 1000));
+
+        // 生成签名
+        request.setSign(Optional.ofNullable(request.getSign())
+                .orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
+
+        String json = makeRequest("/sdk/query_order", request, httpCallOptions);
         return objectMapper.readValue(json, QueryOrderResponse.class);
     }
 
@@ -94,6 +120,15 @@ public class Apis {
      */
     public <T extends PublishControlEventResponse.ControlEventResponse> PublishControlEventResponse<T> publishControlEvent(
             PublishControlEventRequest request, Class<T> dataClass) throws LukSDKException, JsonProcessingException {
+        return publishControlEvent(request, dataClass, null);
+    }
+
+    /**
+     * 发布控制事件，可指定本次调用的超时。
+     */
+    public <T extends PublishControlEventResponse.ControlEventResponse> PublishControlEventResponse<T> publishControlEvent(
+            PublishControlEventRequest request, Class<T> dataClass, HttpCallOptions httpCallOptions)
+            throws LukSDKException, JsonProcessingException {
         // 如果 AppId 为 0，使用配置的
         if (request.getAppId() == null || request.getAppId() == 0) {
             request.setAppId(lukSDK.getConfig().getAppId());
@@ -106,7 +141,7 @@ public class Apis {
         request.setSign(Optional.ofNullable(request.getSign())
                 .orElse(SignatureUtils.signature(lukSDK.getConfig().getAppSecret(), request)));
 
-        String json = makeRequest("/sdk/publish_control_event", request);
+        String json = makeRequest("/sdk/publish_control_event", request, httpCallOptions);
 
         if (dataClass == PublishControlEventResponse.Empty.class || dataClass == null) {
             // 仅处理 code 和 msg，不解析 data
@@ -128,11 +163,11 @@ public class Apis {
     /**
      * 发送 POST 请求
      */
-    private <T> String makeRequest(String endpoint, Object requestBody) throws LukSDKException {
+    private <T> String makeRequest(String endpoint, Object requestBody, HttpCallOptions httpCallOptions) throws LukSDKException {
         try {
             String jsonBody = objectMapper.writeValueAsString(requestBody);
 
-            HttpURLConnection conn = getHttpURLConnection(endpoint, jsonBody);
+            HttpURLConnection conn = getHttpURLConnection(endpoint, jsonBody, httpCallOptions);
 
             int responseCode = conn.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -157,12 +192,14 @@ public class Apis {
         }
     }
 
-    private HttpURLConnection getHttpURLConnection(String endpoint, String jsonBody) throws IOException {
+    private HttpURLConnection getHttpURLConnection(String endpoint, String jsonBody, HttpCallOptions httpCallOptions)
+            throws IOException {
         URL url = new URL(lukSDK.getConfig().getDomain() + endpoint);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");
-        conn.setRequestProperty("User-Agent", "java/v1.0.3");
+        conn.setRequestProperty("User-Agent", DEFAULT_USER_AGENT);
+        applyTimeouts(conn, httpCallOptions);
         conn.setDoOutput(true);
 
         try (OutputStream os = conn.getOutputStream()) {
@@ -170,5 +207,23 @@ public class Apis {
             os.write(input, 0, input.length);
         }
         return conn;
+    }
+
+    private void applyTimeouts(HttpURLConnection conn, HttpCallOptions httpCallOptions) {
+        Config cfg = lukSDK.getConfig();
+        Integer connectMs = pick(httpCallOptions != null ? httpCallOptions.getConnectTimeoutMillis() : null,
+                cfg.getConnectTimeoutMillis());
+        if (connectMs != null && connectMs >= 0) {
+            conn.setConnectTimeout(connectMs);
+        }
+        Integer readMs = pick(httpCallOptions != null ? httpCallOptions.getReadTimeoutMillis() : null,
+                cfg.getReadTimeoutMillis());
+        if (readMs != null && readMs >= 0) {
+            conn.setReadTimeout(readMs);
+        }
+    }
+
+    private static <T> T pick(T override, T fromConfig) {
+        return override != null ? override : fromConfig;
     }
 }
