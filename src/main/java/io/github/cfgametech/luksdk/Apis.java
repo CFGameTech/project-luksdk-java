@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
@@ -19,7 +20,7 @@ import java.util.Optional;
  * API 调用类
  */
 public class Apis {
-    private static final String DEFAULT_USER_AGENT = "java/v1.0.10";
+    private static final String DEFAULT_USER_AGENT = "java/v1.0.11";
 
     private final LukSDK lukSDK;
     private final ObjectMapper objectMapper;
@@ -183,7 +184,13 @@ public class Apis {
                 throw LukSDKExceptions.INTERNAL_ERROR.with("HTTP error: " + responseCode);
             }
         } catch (IOException e) {
-            throw LukSDKExceptions.INTERNAL_ERROR.with("Request failed: " + e.getMessage());
+            if (isTimeoutIOException(e)) {
+                throw new LukSDKException(
+                        LukSDKExceptions.RETRY_ERROR.getCode(),
+                        LukSDKExceptions.RETRY_ERROR.getMsg() + " (" + e.getClass().getSimpleName() + ")",
+                        e);
+            }
+            throw LukSDKExceptions.INTERNAL_ERROR.withCause(e, "Request failed: " + e.getMessage());
         } catch (Exception e) {
             if (e instanceof LukSDKException) {
                 throw (LukSDKException) e;
@@ -225,5 +232,15 @@ public class Apis {
 
     private static <T> T pick(T override, T fromConfig) {
         return override != null ? override : fromConfig;
+    }
+
+    private static boolean isTimeoutIOException(Throwable e) {
+        while (e != null) {
+            if (e instanceof SocketTimeoutException) {
+                return true;
+            }
+            e = e.getCause();
+        }
+        return false;
     }
 }
